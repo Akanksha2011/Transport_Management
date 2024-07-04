@@ -20,12 +20,12 @@ Language: Java
 
 ## Learnings 
 
-Developed as a CLI project in Java, Vaahan Wallah is a testament to our team's proficiency in OOP and our commitment to showcasing our knowledge and skills. Through this project, we gained invaluable insights into designing and animating terminal interfaces and implementing various OOP concepts, including:
+Throughout the course of the project, we have gained invaluable insights into:
 
-**Abstraction:** Utilized to hide complex implementation details and provide a simplified interface for users.
-**Encapsulation:** Ensured data security by bundling data (attributes) and methods (functions) that operate on the data, preventing direct access from outside the class.
-**Hierarchical Inheritance:** Implemented a class structure where multiple derived classes inherit from a single base class, facilitating code reuse and specialization.
-**File Handling (as the database):** Managed persistent data storage and retrieval using file operations, providing a structured approach to store application data.
+- *Abstraction:* Used to hide complex implementation details and provide a simplified interface for users.
+- *Encapsulation:* Ensured data security by bundling data (attributes) and methods (functions) that operate on the data, preventing direct access from outside the class.
+- *Hierarchical Inheritance:* Implemented a class structure where multiple derived classes inherit from a single base class, facilitating code reuse and specialization.
+- *File handling (as the database):* Managed persistent data storage and retrieval using file operations, providing a structured approach to store application data.
 
 By combining our technical expertise with effective teamwork, we have successfully built a robust and feature-rich simulator.
 
