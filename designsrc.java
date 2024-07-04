@@ -1,3 +1,5 @@
+import org.fusesource.jansi.AnsiConsole;
+import org.fusesource.jansi.Ansi;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -38,22 +40,19 @@ public class TransportationSystem {
     }
 
     public static void SetTextColorRED() {
-        // In Java, changing console text color requires additional libraries
-        // such as Jansi. Here, just a placeholder method.
-        System.out.print("\033[0;31m"); // Set color to red
+        System.out.print(Ansi.ansi().fg(Ansi.Color.RED));
     }
 
     public static void SetTextColorWHITE() {
-        // In Java, changing console text color requires additional libraries
-        // such as Jansi. Here, just a placeholder method.
-        System.out.print("\033[0;37m"); // Set color to white
+        System.out.print(Ansi.ansi().fg(Ansi.Color.WHITE));
     }
 
     public static void intro() {
         Scanner scanner = new Scanner(System.in);
+        AnsiConsole.systemInstall(); // Initialize the Jansi console
+
         while (true) {
-            System.out.println("\033[2J\033[H"); // Clear the screen
-            System.out.println("\033[0;30;47m"); // Set background to black and text to white
+            System.out.print(Ansi.ansi().eraseScreen().bg(Ansi.Color.BLACK).fg(Ansi.Color.WHITE)); // Clear the screen and set colors
 
             String a = "\t\t\t████████████████ TRANSPORTATION SYSTEM ████████████████";
             for (char ch : a.toCharArray()) {
@@ -79,6 +78,7 @@ public class TransportationSystem {
                     break;
                 case 99:
                     System.out.println("Exiting...");
+                    AnsiConsole.systemUninstall(); // Uninstall the Jansi console
                     System.exit(0);
                     break;
                 default:
