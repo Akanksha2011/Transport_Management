@@ -6,8 +6,11 @@ Vaahan Wallah is a sophisticated time-based CLI simulator developed in Java, lev
 
 We highly encourage you to try this project on your systems.
 
-### Landing Page: 
-### Dashboard: 
+### Landing Page:  
+### Dashboard
+
+![Dashboard](https://github.com/Akanksha2011/Vaahan_Wallah/raw/main/Dashboard.png)
+
 
 ## Tech Stack
 Language: Java
