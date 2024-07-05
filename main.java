@@ -1013,47 +1013,37 @@ void display_all_Vaahan() {
 
 void Vaahan::display_all_available()
 {
-    system("cls");
-    int choice;
-    do
-    {
+     clearScreen();
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println();
+            System.out.println();
 
-        cout << endl
-             << endl;
-        char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb CHOOSE VAAHAN \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-        int size;
-        size = strlen(a);
-        for (int i = 0; i < size; i++)
-        {
-            Sleep(1);
-            cout << a[i];
-        }
+            String title = "\n\n\t\t\t\t\t\t\t==================== CHOOSE VAAHAN ====================\n";
+            printTitle(title);
 
-        cout << "\n\t\t\t\t\t\t\tChoose type of Vaahan\n\t\t\t\t\t\t\t1.Car.\n\t\t\t\t\t\t\t2.Bus.\n\t\t\t\t\t\t\t3.Bike.\n\t\t\t\t\t\t\t99.back.\n\n\t\t\t\t\t\t\tYour choice : ";
-        cin >> choice;
-        system("cls");
-        switch (choice)
-        {
-        case 1:
-
-            display_available_cars();
-            break;
-        case 2:
-
-            display_available_bus();
-            break;
-        case 3:
-
-            display_available_bikes();
-            break;
-        case 99:
-            break;
-        default:
-            cout << "\n\n\t\t\t\t\t\t\tPlease enter valid input !" << endl;
-            break;
-        }
-
-    } while (choice != 99);
+            System.out.println("\n\t\t\t\t\t\t\tChoose type of Vaahan\n\t\t\t\t\t\t\t1.Car.\n\t\t\t\t\t\t\t2.Bus.\n\t\t\t\t\t\t\t3.Bike.\n\t\t\t\t\t\t\t99.back.\n\n\t\t\t\t\t\t\tYour choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();  // consume the newline
+            clearScreen();
+            switch (choice) {
+                case 1:
+                    displayAvailableCars();
+                    break;
+                case 2:
+                    displayAvailableBuses();
+                    break;
+                case 3:
+                    displayAvailableBikes();
+                    break;
+                case 99:
+                    break;
+                default:
+                    System.out.println("\n\n\t\t\t\t\t\t\tPlease enter valid input!");
+                    break;
+            }
+        } while (choice != 99);
 }
 
 void Vaahan::display_available_cars()
@@ -1278,228 +1268,214 @@ void Vaahan::RepairVaahan()
 
 void User::PreLogin_Customer()
 {
-    system("cls");
+     clearScreen();
+    Scanner scanner = new Scanner(System.in);
     int choice;
-    do
-    {
-        system("cls");
+    do {
+        clearScreen();
 
-        cout << endl
-             << endl;
+        System.out.println();
+        System.out.println();
 
-        char a[] = "\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb CUSTOMER \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-        int size;
-        size = strlen(a);
-        for (int i = 0; i < size; i++)
-        {
-            Sleep(1);
-            cout << a[i];
-        }
-        cout << "\n\t\t\t\t\t\t\t1.Login.\n\t\t\t\t\t\t\t2.Sign-up.\n\t\t\t\t\t\t\t99.Exit.\n\n\t\t\t\t\t\t\tYour option : ";
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            system("cls");
-            Login_customer();
-            break;
-        case 2:
-            Sign_up();
-            break;
-        case 99:
-            break;
-        default:
-            cout << "\n\t\t\t\t\t\t\tPlease enter valid input !" << endl;
-            break;
+        String title = "\t\t\t\t\t\t\t==================== CUSTOMER ====================\n";
+        printTitle(title);
+        System.out.println("\n\t\t\t\t\t\t\t1. Login.");
+        System.out.println("\n\t\t\t\t\t\t\t2. Sign-up.");
+        System.out.println("\n\t\t\t\t\t\t\t99. Exit.");
+        System.out.print("\n\n\t\t\t\t\t\t\tYour option: ");
+        choice = scanner.nextInt();
+        scanner.nextLine();  // consume the newline
+        switch (choice) {
+            case 1:
+                clearScreen();
+                loginCustomer();
+                break;
+            case 2:
+                signUp();
+                break;
+            case 99:
+                break;
+            default:
+                System.out.println("\n\t\t\t\t\t\t\tPlease enter valid input!");
+                break;
         }
     } while (choice != 99);
 }
 
 void User::Login_customer()
 {
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb LOGIN DETAILS \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    string username;
-    string password;
-    cout << "\n\t\t\t\t\t\t\tEnter your username : ";
-    cin >> username;
-    cout << "\n\t\t\t\t\t\t\tEnter your password : ";
-    cin >> password;
-    bool flag = 1;
-    Node_User *ptr = head_user;
-    while (ptr != NULL)
-    {
-        if (ptr->NameofUser == username && ptr->Password == password)
-        {
-            flag = 0;
-            AfterLoginCustomer(username);
+   String title = "\n\n\t\t\t\t\t\t\t==================== LOGIN DETAILS ====================\n";
+        printTitle(title);
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("\n\t\t\t\t\t\t\tEnter your username: ");
+        String username = scanner.nextLine();
+        System.out.print("\n\t\t\t\t\t\t\tEnter your password: ");
+        String password = scanner.nextLine();
+
+        boolean flag = true;
+        NodeUser ptr = headUser;
+        while (ptr != null) {
+            if (ptr.nameOfUser.equals(username) && ptr.password.equals(password)) {
+                flag = false;
+                afterLoginCustomer(username);
+                break;
+            }
+            ptr = ptr.next;
         }
-        ptr = ptr->next;
-    }
-    if (flag)
-    {
-        cout << "\n\t\t\t\t\t\t\tInvalid username or password !" << endl;
-        sleep(3);
-    }
+
+        if (flag) {
+            System.out.println("\n\t\t\t\t\t\t\tInvalid username or password!");
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 }
 
 void User::AfterLoginCustomer(string username)
 {
-    system("cls");
-    int choice;
-    do
-    {
-
-        cout << endl
-             << endl;
-        char a[] = "\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb DASHBOARD \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-        int size;
-        size = strlen(a);
-        for (int i = 0; i < size; i++)
-        {
-            Sleep(1);
-            cout << a[i];
-        }
-        cout << "\n\t\t\t\t\t\t\t1.Check for available Vaahan.\n\t\t\t\t\t\t\t2.Rent a Vaahan.\n\t\t\t\t\t\t\t3.Return Vaahan.\n\t\t\t\t\t\t\t4.Add Money.\n\t\t\t\t\t\t\t5.Display my details.\n\t\t\t\t\t\t\t99.Log-out.\n\n\t\t\t\t\t\t\tYour option : ";
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            display_all_available();
-            break;
-        case 2:
-            rent(username);
-            break;
-        case 3:
-            returnVaahan(username);
-            break;
-        case 4:
-            add_money(username);
-            break;
-        case 5:
-            display_my_details(username);
-            break;
-        case 99:
-            break;
-        default:
-            system("cls");
-            cout << "\n\t\t\t\t\t\t\tPlease enter valid input !" << endl;
-            break;
-        }
-
-    } while (choice != 99);
+    clearScreen();
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println();
+            System.out.println();
+            String title = "\t\t\t\t\t\t\t==================== DASHBOARD ====================\n";
+            printTitle(title);
+            System.out.println("\n\t\t\t\t\t\t\t1. Check for available Vaahan.");
+            System.out.println("\n\t\t\t\t\t\t\t2. Rent a Vaahan.");
+            System.out.println("\n\t\t\t\t\t\t\t3. Return Vaahan.");
+            System.out.println("\n\t\t\t\t\t\t\t4. Add Money.");
+            System.out.println("\n\t\t\t\t\t\t\t5. Display my details.");
+            System.out.println("\n\t\t\t\t\t\t\t99. Log-out.");
+            System.out.print("\n\n\t\t\t\t\t\t\tYour option: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();  // consume the newline
+            clearScreen();
+            switch (choice) {
+                case 1:
+                    displayAllAvailable();
+                    break;
+                case 2:
+                    rent(username);
+                    break;
+                case 3:
+                    returnVaahan(username);
+                    break;
+                case 4:
+                    addMoney(username);
+                    break;
+                case 5:
+                    displayMyDetails(username);
+                    break;
+                case 99:
+                    break;
+                default:
+                    clearScreen();
+                    System.out.println("\n\t\t\t\t\t\t\tPlease enter valid input!");
+                    break;
+            }
+        } while (choice != 99);
 }
 
 void User::Login_admin()
 {
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb ADMIN \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    string username;
-    string password;
-    cout << "\n\t\t\t\t\t\t\tDear admin, to login enter your username : ";
-    cin >> username;
-    cout << "\n\t\t\t\t\t\t\tPlease enter your password : ";
-    cin >> password;
-    string chk_username;
-    string chk_password;
+   clearScreen();
+        System.out.println();
+        System.out.println();
+        String title = "\n\n\t\t\t\t\t\t\t==================== ADMIN ====================\n";
+        printTitle(title);
 
-    ifstream fin;
-    bool flag = 1;
-    fin.open("admin.txt");
-    while (!fin.eof())
-    {
-        getline(fin >> ws, chk_username);
-        getline(fin >> ws, chk_password);
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("\n\t\t\t\t\t\t\tDear admin, to login enter your username: ");
+        String username = scanner.nextLine();
+        System.out.print("\n\t\t\t\t\t\t\tPlease enter your password: ");
+        String password = scanner.nextLine();
 
-        if (username == chk_username && password == chk_password)
-        {
-            flag = 0;
-            AfterLoginAdmin(username);
+        String chkUsername;
+        String chkPassword;
+
+        boolean flag = true;
+        try (BufferedReader fin = new BufferedReader(new FileReader("admin.txt"))) {
+            while ((chkUsername = fin.readLine()) != null && (chkPassword = fin.readLine()) != null) {
+                if (username.equals(chkUsername) && password.equals(chkPassword)) {
+                    flag = false;
+                    afterLoginAdmin(username);
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }
-    if (flag)
-        cout << "\n\t\t\t\t\t\t\tInvalid username or password !" << endl;
-    system("cls");
-    fin.close();
+
+        if (flag) {
+            System.out.println("\n\t\t\t\t\t\t\tInvalid username or password!");
+        }
+        clearScreen();
 }
 
 void User::AfterLoginAdmin(string username)
 {
-    system("cls");
-    int choice;
-    do
-    {
-        cout << endl
-             << endl;
-        char a[] = "\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb LOGIN DASHBOARD \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-        int size;
-        size = strlen(a);
-        for (int i = 0; i < size; i++)
-        {
-            Sleep(1);
-            cout << a[i];
-        }
-        cout << "\n\t\t\t\t\t\t\t1.Add Vaahan.\n\t\t\t\t\t\t\t2.Repair Vaahan.\n\t\t\t\t\t\t\t3.Display all Vaahans.\n\t\t\t\t\t\t\t4.Display available Vaahans for rent.\n\t\t\t\t\t\t\t5.Display all users data.\n\t\t\t\t\t\t\t99.Exit.\n\n\t\t\t\t\t\t\t Your Choice : ";
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            addVaahan();
-            break;
-        case 2:
-            RepairVaahan();
-            break;
-        case 3:
-            display_all_Vaahan();
-            break;
-        case 4:
-            display_all_available();
-            break;
-        case 5:
-            display_all_users();
-            break;
-        case 99:
-            break;
-        default:
-            cout << "Please enter valid input !" << endl;
-            break;
-        }
-    } while (choice != 99);
+    clearScreen();
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println();
+            System.out.println();
+            String title = "\t\t\t\t\t\t\t==================== LOGIN DASHBOARD ====================\n";
+            printTitle(title);
+            System.out.println("\n\t\t\t\t\t\t\t1. Add Vaahan.");
+            System.out.println("\n\t\t\t\t\t\t\t2. Repair Vaahan.");
+            System.out.println("\n\t\t\t\t\t\t\t3. Display all Vaahans.");
+            System.out.println("\n\t\t\t\t\t\t\t4. Display available Vaahans for rent.");
+            System.out.println("\n\t\t\t\t\t\t\t5. Display all users data.");
+            System.out.println("\n\t\t\t\t\t\t\t99. Exit.");
+            System.out.print("\n\n\t\t\t\t\t\t\tYour choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();  // consume the newline
+            switch (choice) {
+                case 1:
+                    addVaahan();
+                    break;
+                case 2:
+                    repairVaahan();
+                    break;
+                case 3:
+                    displayAllVaahan();
+                    break;
+                case 4:
+                    displayAllAvailable();
+                    break;
+                case 5:
+                    displayAllUsers();
+                    break;
+                case 99:
+                    break;
+                default:
+                    System.out.println("Please enter valid input!");
+                    break;
+            }
+        } while (choice != 99);
 }
 
 void User::Sign_up()
 {
-    string NameofUser1;
-    string password1;
-    int balance1;
-    string LicenseNumber1;
-    string PhoneNumber1;
-    cout << "\n\t\t\t\t\t\t\tYour Name : ";
-    cin >> NameofUser1;
-    cout << "\t\t\t\t\t\t\tChoose a strong password : ";
-    cin >> password1;
-    cout << "\t\t\t\t\t\t\tAdd money to your account : Rs.";
-    cin >> balance1;
-    cout << "\t\t\t\t\t\t\tLicense number : ";
-    cin >> LicenseNumber1;
-    cout << "\t\t\t\t\t\t\tPhone number - ";
-    cin >> PhoneNumber1;
-    insertNodeUser(NameofUser1, password1, balance1, LicenseNumber1, PhoneNumber1);
+    Scanner scanner = new Scanner(System.in);
+        System.out.print("\n\t\t\t\t\t\t\tYour Name: ");
+        String nameOfUser = scanner.nextLine();
+        System.out.print("\t\t\t\t\t\t\tChoose a strong password: ");
+        String password = scanner.nextLine();
+        System.out.print("\t\t\t\t\t\t\tAdd money to your account: Rs.");
+        int balance = scanner.nextInt();
+        scanner.nextLine();  // consume the newline
+        System.out.print("\t\t\t\t\t\t\tLicense number: ");
+        String licenseNumber = scanner.nextLine();
+        System.out.print("\t\t\t\t\t\t\tPhone number: ");
+        String phoneNumber = scanner.nextLine();
+
+        insertNodeUser(nameOfUser, password, balance, licenseNumber, phoneNumber);
 }
 
 //====================main=============================//
