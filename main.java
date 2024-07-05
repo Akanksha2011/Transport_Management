@@ -1482,105 +1482,56 @@ void User::Sign_up()
 
 int main()
 {
-    system("cls");
+    clearScreen();
+        
+        // intro();
+        // clearScreen();
+        changeColor("F0"); // Change background and font color
+        User obj = new User();
+        obj.createUserList();
+        obj.createCarList();
+        obj.createBusList();
+        obj.createBikeList();
+        
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            clearScreen();
+            // Print border animation (skipped due to Java limitations)
 
-    // intro();
-    //  system("cls");
-    system("color F0");
-    // first number for bg color and second for font color
-    User obj;
-    obj.createUserList();
-    obj.createcarList();
-    obj.createbusList();
-    obj.createbikeList();
-    int choice;
-    do
-    {
-        system("cls");
-        // for (int k = 0; k < 160; k++)
-        // {
-        //     cout << char(177);
-        // }
-        // system("color 08");
-        cout << endl
-             << endl;
-        for (int i = 0; i < 1; i++)
-        {
-            int x = 0;
-            int y = 1;
-            for (y = 1; y < 20; y++)
-            {
-                gotoXY(x, y);
-                cout << "\xB1\xB1";
-                Sleep(1);
-                // gotoXY(x,y);
-                // cout << "                                                     ";
+            System.out.println();
+            System.out.println();
+            
+            String title = "\n\t\t\t\t\t\t\t====================== VAAHAN WALLAH ======================";
+            printTitle(title);
+            
+            System.out.println();
+            System.out.println();
+            System.out.println("\t\t\t\t\t\t\t\t\t     Welcome");
+            System.out.println("\t\t\t\t\t\t\t1. Customer.");
+            System.out.println("\t\t\t\t\t\t\t2. Admin.");
+            System.out.println("\t\t\t\t\t\t\t99. Exit.");
+            System.out.print("\n\t\t\t\t\t\t\tSelect Your Option: ");
+            
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            
+            switch (choice) {
+                case 1:
+                    clearScreen();
+                    obj.preLoginCustomer();
+                    break;
+                case 2:
+                    clearScreen();
+                    obj.loginAdmin();
+                    break;
+                case 99:
+                    clearScreen();
+                    break;
+                default:
+                    clearScreen();
+                    System.out.println("Please enter valid input! Try again...");
+                    break;
             }
-            y = 19;
-            for (x = 2; x < 160; x++)
-            {
-                gotoXY(x, y);
-                cout << "\xB1";
-                Sleep(1);
-                // gotoXY(x,y);
-                // cout << "                                                     ";
-            }
-            x = 158;
-            for (y = 18; y > 0; y--)
-            {
-                gotoXY(x, y);
-                cout << "\xB1\xB1";
-                Sleep(1);
-
-                // cout << "                                                     ";
-            }
-            y = 0;
-
-            for (x = 159; x > -1; x--)
-            {
-                gotoXY(x, y);
-                cout << "\xB1";
-                Sleep(1);
-                // gotoXY(x,y);
-                // cout << "                                                     ";
-            }
-            y = 3, x = 5;
-            gotoXY(x, y);
-        }
-        char a[] = "\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb VAAHAN WALLAH \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb";
-        int size;
-        size = strlen(a);
-        for (int i = 0; i < size; i++)
-        {
-            Sleep(1);
-            cout << a[i];
-        }
-
-        cout << endl
-             << endl;
-        Sleep(0);
-        cout << "\t\t\t\t\t\t\t\t\t     Welcome\n";
-        cout << "\t\t\t\t\t\t\t1.Customer.\n\t\t\t\t\t\t\t2.Admin.\n\t\t\t\t\t\t\t99.Exit.\n\n\t\t\t\t\t\t\t";
-        cout << "Select Your Option : ";
-
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            system("cls");
-            obj.PreLogin_Customer();
-            break;
-        case 2:
-            system("cls");
-            obj.Login_admin();
-            break;
-        case 99:
-            system("cls");
-            break;
-        default:
-            system("cls");
-            cout << "Please enter valid input ! \nTry again..." << endl;
-            break;
-        }
-    } while (choice != 99);
+        } while (choice != 99);
 }
