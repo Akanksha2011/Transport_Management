@@ -1,93 +1,88 @@
-#include <bits/stdc++.h>
-#include <iomanip>
-#include <windows.h>
-#include <unistd.h>
-#include <ctime>
-#include "DesignSrc.cpp"
-
-using namespace std;
+import java.util.*;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 //=======================border===========================//
 
-COORD CursorPosition;
-HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-
-void gotoXY(int x, int y)
-{
-    CursorPosition.X = x;                              // Locates column
-    CursorPosition.Y = y;                              // Locates Row
-    SetConsoleCursorPosition(console, CursorPosition); // Sets position for next thing to be printed
-}
+// Note: Java doesn't have built-in console cursor positioning like C++.
+// You can use third-party libraries or a different approach for console applications.
 
 //=======================time difference===========================//
 
-time_t now = time(0);
-tm *ltm = localtime(&now);
+LocalDate now = LocalDate.now();
 
-const int monthDays[12] = {31, 59, 90, 120, 151, 181, 212, 243,
-                           273, 304, 334, 365};
-int countLeapYearDays(int d[])
-{
+int[] monthDays = { 31, 59, 90, 120, 151, 181, 212, 243,
+                    273, 304, 334, 365 };
+
+int countLeapYearDays(int[] d) {
     int years = d[2];
     if (d[1] <= 2)
         years--;
     return ((years / 4) - (years / 100) + (years / 400));
 }
 
-int countNoOfDays(int date1[], int date2[])
-{
-    long int dayCount1 = (date1[2] * 365);
-    dayCount1 += monthDays[date1[1]];
+int countNoOfDays(int[] date1, int[] date2) {
+    long dayCount1 = (date1[2] * 365);
+    dayCount1 += monthDays[date1[1] - 1];
     dayCount1 += date1[0];
     dayCount1 += countLeapYearDays(date1);
-    long int dayCount2 = (date2[2] * 365);
-    dayCount2 += monthDays[date2[1]];
+    long dayCount2 = (date2[2] * 365);
+    dayCount2 += monthDays[date2[1] - 1];
     dayCount2 += date2[0];
     dayCount2 += countLeapYearDays(date2);
-    return (abs(dayCount1 - dayCount2 - 693991));
+    return Math.abs((int)(dayCount1 - dayCount2 - 693991));
 }
 
 //===============classes===================================//
 
-class Node_Vaahan
-{
-public:
-    string NameofVaahan;
-    string NumberPlate;
-    string Ventilation;
+class Node_Vaahan {
+    String NameofVaahan;
+    String NumberPlate;
+    String Ventilation;
     int Count;
     int charges;
-    Node_Vaahan *next;
+    Node_Vaahan next;
+
     // Parameterised Constructor
-    Node_Vaahan(string NameofVaahan, string NumberPlate, string Ventilation, int Count, int charges)
-    {
-        this->NameofVaahan = NameofVaahan;
-        this->NumberPlate = NumberPlate;
-        this->Ventilation = Ventilation;
-        this->Count = Count;
-        this->charges = charges;
-        this->next = NULL;
+    Node_Vaahan(String NameofVaahan, String NumberPlate, String Ventilation, int Count, int charges) {
+        this.NameofVaahan = NameofVaahan;
+        this.NumberPlate = NumberPlate;
+        this.Ventilation = Ventilation;
+        this.Count = Count;
+        this.charges = charges;
+        this.next = null;
     }
-};
+}
 
-class Vaahan
-{
-protected:
-    Node_Vaahan *head_car;
-    Node_Vaahan *head_bus;
-    Node_Vaahan *head_bike;
+class Vaahan {
+    protected Node_Vaahan head_car;
+    protected Node_Vaahan head_bus;
+    protected Node_Vaahan head_bike;
 
-public:
-    Vaahan()
-    {
-        head_car = NULL;
-        head_bus = NULL;
-        head_bike = NULL;
+    Vaahan() {
+        head_car = null;
+        head_bus = null;
+        head_bike = null;
     }
-    void insertNodecar(string, string, string, int, int);
-    void insertNodebus(string, string, string, int, int);
-    void insertNodebike(string, string, string, int, int);
 
+    void insertNodecar(String NameofVaahan, String NumberPlate, String Ventilation, int Count, int charges) {
+        Node_Vaahan newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
+        newNode.next = head_car;
+        head_car = newNode;
+    }
+
+    void insertNodebus(String NameofVaahan, String NumberPlate, String Ventilation, int Count, int charges) {
+        Node_Vaahan newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
+        newNode.next = head_bus;
+        head_bus = newNode;
+    }
+
+    void insertNodebike(String NameofVaahan, String NumberPlate, String Ventilation, int Count, int charges) {
+        Node_Vaahan newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
+        newNode.next = head_bike;
+        head_bike = newNode;
+    }
     void createcarList();
     void createbusList();
     void createbikeList();
@@ -96,1208 +91,924 @@ public:
     void display_all_cars();
     void display_all_bus();
     void display_all_bikes();
-
     void display_all_available();
     void display_available_cars();
     void display_available_bus();
     void display_available_bikes();
-
     void addVaahan();
     void RepairVaahan();
-};
-
-class Node_User
-{
-public:
-    string NameofUser;
-    string Password;
+}
+class Node_User {
+    String NameofUser;
+    String Password;
     int balance;
-    string LicenseNumber;
-    string PhoneNumber;
-    Node_User *next;
+    String LicenseNumber;
+    String PhoneNumber;
+    Node_User next;
+
     // Parameterised Constructor
-    Node_User(string NameofUser, string Password, int balance, string LicenseNumber, string PhoneNumber)
-    {
-        this->NameofUser = NameofUser;
-        this->Password = Password;
-        this->balance = balance;
-        this->LicenseNumber = LicenseNumber;
-        this->PhoneNumber = PhoneNumber;
-        this->next = NULL;
+    Node_User(String NameofUser, String Password, int balance, String LicenseNumber, String PhoneNumber) {
+        this.NameofUser = NameofUser;
+        this.Password = Password;
+        this.balance = balance;
+        this.LicenseNumber = LicenseNumber;
+        this.PhoneNumber = PhoneNumber;
+        this.next = null;
     }
-};
+}
 
-class User : public Vaahan
-{
-private:
-    Node_User *head_user;
+class User extends Vaahan {
+    private Node_User head_user;
 
-public:
-    User()
-    {
-        head_user = NULL;
+    public User() {
+        head_user = null;
     }
-    void insertNodeUser(string, string, int, string, string);
+
+    void insertNodeUser(String NameofUser, String Password, int balance, String LicenseNumber, String PhoneNumber) {
+        Node_User newNode = new Node_User(NameofUser, Password, balance, LicenseNumber, PhoneNumber);
+        newNode.next = head_user;
+        head_user = newNode;
+    }
+
     void createUserList();
     void Sign_up();
+
     void display_all_users();
-    void display_my_details(string);
+
+    void display_my_details(String user);
+
     void Login_admin();
-    void AfterLoginAdmin(string);
+    void AfterLoginAdmin(String admin);
     void PreLogin_Customer();
     void Login_customer();
-    void AfterLoginCustomer(string);
-    void add_money(string);
-
-    void rent(string);
-    void rentCar(string);
-    void rentBus(string);
-    void rentBike(string);
-    void returnVaahan(string);
-    void returnCar(string);
-    void returnBus(string);
-    void returnBike(string);
-
-    ~User()
-    {
-        ofstream fout;
-        fout.open("cars.txt");
-        Node_Vaahan *ptr1 = head_car;
-        while (ptr1 != NULL)
-        {
-            fout << ptr1->NameofVaahan << endl;
-            fout << ptr1->NumberPlate << endl;
-            fout << ptr1->Ventilation << endl;
-            fout << ptr1->Count << endl;
-            fout << ptr1->charges << endl;
-            ptr1 = ptr1->next;
-        }
-        fout.close();
-        fout.open("bus.txt");
-        Node_Vaahan *ptr2 = head_bus;
-        while (ptr2 != NULL)
-        {
-            fout << ptr2->NameofVaahan << endl;
-            fout << ptr2->NumberPlate << endl;
-            fout << ptr2->Ventilation << endl;
-            fout << ptr2->Count << endl;
-            fout << ptr2->charges << endl;
-            ptr2 = ptr2->next;
-        }
-        fout.close();
-        fout.open("bikes.txt");
-        Node_Vaahan *ptr3 = head_bike;
-        while (ptr3 != NULL)
-        {
-            fout << ptr3->NameofVaahan << endl;
-            fout << ptr3->NumberPlate << endl;
-            fout << ptr3->Ventilation << endl;
-            fout << ptr3->Count << endl;
-            fout << ptr3->charges << endl;
-            ptr3 = ptr3->next;
-        }
-        fout.close();
-        fout.open("Users.txt");
-        Node_User *ptr4 = head_user;
-        while (ptr4 != NULL)
-        {
-            fout << ptr4->NameofUser << endl;
-            fout << ptr4->Password << endl;
-            fout << ptr4->balance << endl;
-            fout << ptr4->LicenseNumber << endl;
-            fout << ptr4->PhoneNumber << endl;
-            ptr4 = ptr4->next;
-        }
-        fout.close();
-    };
-};
-
-//========================User class functions========================//
-
-void User::insertNodeUser(string NameofUser, string Password, int balance, string LicenseNumber, string PhoneNumber)
-{
-    Node_User *newNode = new Node_User(NameofUser, Password, balance, LicenseNumber, PhoneNumber);
-
-    if (head_user == NULL)
-    {
-        head_user = newNode;
-        return;
-    }
-
-    Node_User *temp = head_user;
-    while (temp->next != NULL)
-        temp = temp->next;
-
-    temp->next = newNode;
-}
-
-void User::createUserList()
-{
-    ifstream fin;
-    string NameofUser1;
-    string Password1;
-    int balance1;
-    string LicenseNumber1;
-    string PhoneNumber1;
-    fin.open("Users.txt");
-    while (!fin.eof())
-    {
-        getline(fin >> ws, NameofUser1);
-        getline(fin >> ws, Password1);
-        fin >> balance1 >> ws;
-        getline(fin >> ws, LicenseNumber1);
-        getline(fin >> ws, PhoneNumber1);
-        insertNodeUser(NameofUser1, Password1, balance1, LicenseNumber1, PhoneNumber1);
-    }
-}
-
-void User::display_all_users()
-{
-    Node_User *temp = head_user;
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb USERS LIST \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    if (head_user == NULL)
-    {
-        cout << "\n\t\t\t\t\t\t\tList empty" << endl;
-        return;
-    }
-
-    while (temp != NULL)
-    {
-        cout << "\n\t\t\t\t\t\t\tName - " << temp->NameofUser << endl;
-        cout << "\n\t\t\t\t\t\t\tPassword - " << temp->Password << endl;
-        cout << "\n\t\t\t\t\t\t\tBalance - Rs." << temp->balance << endl;
-        cout << "\n\t\t\t\t\t\t\tLicense number - " << temp->LicenseNumber << endl;
-        cout << "\n\t\t\t\t\t\t\tPhone number - " << temp->PhoneNumber << endl;
-        cout << "\n\t\t\t\t\t\t\t*************************************" << endl;
-        temp = temp->next;
-    }
-    cout << "\n";
-}
-
-void User::display_my_details(string username)
-{
-
-    Node_User *temp = head_user;
-
-    if (head_user == NULL)
-    {
-        cout << "\n\n\t\t\t\t\t\t\tList empty" << endl;
-        return;
-    }
-
-    while (temp != NULL)
-    {
-        if (temp->NameofUser == username)
-        {
-            system("cls");
-            cout << endl
-                 << endl;
-            char a[] = "\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb MY DETAILS \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-            int size;
-            size = strlen(a);
-            for (int i = 0; i < size; i++)
-            {
-                Sleep(1);
-                cout << a[i];
+    void AfterLoginCustomer(String customer);
+    void add_money(String user);
+    void rent(String user);
+    void rentCar(String user);
+    void rentBus(String user);
+    void rentBike(String user);
+    @Override
+    protected void finalize() {
+        try (BufferedWriter fout = new BufferedWriter(new FileWriter("cars.txt"))) {
+            Node_Vaahan ptr1 = head_car;
+            while (ptr1 != null) {
+                fout.write(ptr1.NameofVaahan);
+                fout.newLine();
+                fout.write(ptr1.NumberPlate);
+                fout.newLine();
+                fout.write(ptr1.Ventilation);
+                fout.newLine();
+                fout.write(Integer.toString(ptr1.Count));
+                fout.newLine();
+                fout.write(Integer.toString(ptr1.charges));
+                fout.newLine();
+                ptr1 = ptr1.next;
             }
-            cout << "\n\t\t\t\t\t\t\tName - " << temp->NameofUser << endl;
-            cout << "\t\t\t\t\t\t\tPassword - " << temp->Password << endl;
-            cout << "\t\t\t\t\t\t\tBalance - Rs." << temp->balance << endl;
-            cout << "\t\t\t\t\t\t\tLicense number - " << temp->LicenseNumber << endl;
-            cout << "\t\t\t\t\t\t\tPhone number - " << temp->PhoneNumber << endl;
-            cout << "\t\t\t\t\t\t\t*************************************" << endl;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        temp = temp->next;
-    }
-    cout << "\n";
-}
 
-void User::rent(string username)
-{
-    system("cls");
-    int choice;
-    int rent_days;
-    do
-    {
-        cout << endl
-             << endl;
-        char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RENT A VAAHAN \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-        int size;
-        size = strlen(a);
-        for (int i = 0; i < size; i++)
-        {
-            Sleep(1);
-            cout << a[i];
-        }
-        cout << "\n\t\t\t\t\t\t\tWhich Vaahan would you to rent ?" << endl;
-        cout << "\t\t\t\t\t\t\t1.car\n\t\t\t\t\t\t\t2.bus\n\t\t\t\t\t\t\t3.bike\n\t\t\t\t\t\t\t99.back\n\n\t\t\t\t\t\t\tYour choice : ";
-
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            rentCar(username);
-            break;
-        case 2:
-            rentBus(username);
-            break;
-        case 3:
-            rentBike(username);
-            break;
-        case 99:
-            system("cls");
-            break;
-        default:
-            system("cls");
-            cout << "\n\n\t\t\t\t\t\t\tPlease enter valid input !" << endl;
-            break;
-        }
-    } while (choice != 99);
-}
-
-void User::rentCar(string username)
-{
-
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RENT CAR \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    int rent_days;
-    cout << "\n\t\t\t\t\t\t\tEnter the no of days for which you would like to rent the car : ";
-    cin >> rent_days;
-    cout << "\n\t\t\t\t\t\t\tEnter car name which you would like to rent : ";
-    string chkcar;
-    cin >> chkcar;
-
-    Node_Vaahan *ptr = head_car;
-    Node_User *ptr2 = head_user;
-    while (ptr2 != NULL)
-    {
-        if (ptr2->NameofUser == username)
-            break;
-        ptr2 = ptr2->next;
-    }
-
-    bool flag = 0;
-
-    while (ptr != NULL)
-    {
-        if (ptr->NameofVaahan == chkcar)
-        {
-            flag = 1;
-            if (ptr->Count > 0)
-            {
-                if ((rent_days * ptr->charges) < ptr2->balance)
-                {
-                    cout << "\t\t\t\t\t\t\tDear customer your Vaahan is booked." << endl;
-                    cout << "\n\t\t\t\t\t\t\tDetails - \n\t\t\t\t\t\t\tName - " << ptr->NameofVaahan << endl;
-                    cout << "\t\t\t\t\t\t\tNumber - " << ptr->NumberPlate << "\n\t\t\t\t\t\t\tVentilation type - "
-                         << ptr->Ventilation << endl;
-                    ptr2->balance = ptr2->balance - (rent_days * ptr->charges);
-                    cout << "\t\t\t\t\t\t\tRs." << (rent_days * ptr->charges) << " were deducted from your account." << endl;
-                    cout << "\t\t\t\t\t\t\tCurrent balance - Rs." << ptr2->balance << endl;
-                    ptr->Count--;
-
-                    ofstream fout;
-                    fout.open("CarsOnRent.txt", ios::app);
-                    fout << ptr2->NameofUser << endl;
-                    fout << ptr->NameofVaahan << endl;
-                    fout << ptr->NumberPlate << endl;
-                    fout << ltm->tm_mday << endl;
-                    fout << 1 + ltm->tm_mon << endl;
-                    fout << 1900 + ltm->tm_year << endl;
-                    fout << rent_days << endl;
-                    fout.close();
-                }
-                else
-                    cout << "\n\t\t\t\t\t\t\tInsufficient funds !\n\t\t\t\t\t\t\tAdd money to your account and try again..." << endl;
+        try (BufferedWriter fout = new BufferedWriter(new FileWriter("bus.txt"))) {
+            Node_Vaahan ptr2 = head_bus;
+            while (ptr2 != null) {
+                fout.write(ptr2.NameofVaahan);
+                fout.newLine();
+                fout.write(ptr2.NumberPlate);
+                fout.newLine();
+                fout.write(ptr2.Ventilation);
+                fout.newLine();
+                fout.write(Integer.toString(ptr2.Count));
+                fout.newLine();
+                fout.write(Integer.toString(ptr2.charges));
+                fout.newLine();
+                ptr2 = ptr2.next;
             }
-            else
-                cout << "\n\t\t\t\t\t\t\t" << ptr->NameofVaahan << " is currently unavailable." << endl;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        ptr = ptr->next;
-    }
-    if (!flag)
-        cout << "\n\t\t\t\t\t\t\tCar not found !" << endl;
-}
 
-void User::rentBus(string username)
-{
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RENT BUS \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    int rent_days;
-    cout << "\n\t\t\t\t\t\t\tEnter the no of days for which you would like to rent the bus :";
-    cin >> rent_days;
-    cout << "\n\t\t\t\t\t\t\tEnter bus name which you would like to rent : ";
-    string chkbus;
-    cin >> chkbus;
-
-    Node_Vaahan *ptr = head_bus;
-    Node_User *ptr2 = head_user;
-    while (ptr2 != NULL)
-    {
-        if (ptr2->NameofUser == username)
-            break;
-        ptr2 = ptr2->next;
-    }
-
-    bool flag = 0;
-
-    while (ptr != NULL)
-    {
-        if (ptr->NameofVaahan == chkbus)
-        {
-            flag = 1;
-            if (ptr->Count > 0)
-            {
-                if ((rent_days * ptr->charges) < ptr2->balance)
-                {
-                    cout << "\n\t\t\t\t\t\t\tDear customer your Vaahan is booked." << endl;
-                    cout << "\t\t\t\t\t\t\tDetails - \n\t\t\t\t\t\t\tName - " << ptr->NameofVaahan << endl;
-                    cout << "\t\t\t\t\t\t\tNumber - " << ptr->NumberPlate << "\n\t\t\t\t\t\t\tVentilation type -"
-                         << ptr->Ventilation << endl;
-                    ptr2->balance = ptr2->balance - (rent_days * ptr->charges);
-                    cout << "\n\t\t\t\t\t\t\tRs." << rent_days * ptr->charges << " were deducted from your account." << endl;
-                    cout << "\t\t\t\t\t\t\tCurrent balance - Rs." << ptr2->balance << endl;
-                    ptr->Count--;
-
-                    ofstream fout;
-                    fout.open("BusOnRent.txt", ios::app);
-                    fout << ptr2->NameofUser << endl;
-                    fout << ptr->NameofVaahan << endl;
-                    fout << ptr->NumberPlate << endl;
-                    fout << ltm->tm_mday << endl;
-                    fout << 1 + ltm->tm_mon << endl;
-                    fout << 1900 + ltm->tm_year << endl;
-                    fout << rent_days << endl;
-                    fout.close();
-                }
-                else
-                    cout << "\n\t\t\t\t\t\t\tInsufficient funds !\n\t\t\t\t\t\t\tAdd money to your account and try again..." << endl;
+        try (BufferedWriter fout = new BufferedWriter(new FileWriter("bikes.txt"))) {
+            Node_Vaahan ptr3 = head_bike;
+            while (ptr3 != null) {
+                fout.write(ptr3.NameofVaahan);
+                fout.newLine();
+                fout.write(ptr3.NumberPlate);
+                fout.newLine();
+                fout.write(ptr3.Ventilation);
+                fout.newLine();
+                fout.write(Integer.toString(ptr3.Count));
+                fout.newLine();
+                fout.write(Integer.toString(ptr3.charges));
+                fout.newLine();
+                ptr3 = ptr3.next;
             }
-            else
-                cout << "\n\t\t\t\t\t\t\t" << ptr->NameofVaahan << " is currently unavailable." << endl;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        ptr = ptr->next;
-    }
-    if (!flag)
-        cout << "\n\t\t\t\t\t\t\tBus not found !" << endl;
-}
 
-void User::rentBike(string username)
-{
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RENT BIKE \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    int rent_days;
-    cout << "\n\t\t\t\t\t\t\tEnter the no of days for which you would like to rent the bike :";
-    cin >> rent_days;
-    cout << "\n\t\t\t\t\t\t\tEnter bike name which you would like to rent : ";
-    string chkbike;
-    cin >> chkbike;
-
-    Node_Vaahan *ptr = head_bike;
-    Node_User *ptr2 = head_user;
-    while (ptr2 != NULL)
-    {
-        if (ptr2->NameofUser == username)
-            break;
-        ptr2 = ptr2->next;
-    }
-
-    bool flag = 0;
-
-    while (ptr != NULL)
-    {
-        if (ptr->NameofVaahan == chkbike)
-        {
-            flag = 1;
-            if (ptr->Count > 0)
-            {
-                if ((rent_days * ptr->charges) < ptr2->balance)
-                {
-                    cout << "\t\t\t\t\t\t\tDear customer your Vaahan is booked." << reset << endl;
-                    cout << "\t\t\t\t\t\t\tDetails - \n\t\t\t\t\t\t\tName - " << ptr->NameofVaahan << endl;
-                    cout << "\t\t\t\t\t\t\tNumber - " << ptr->NumberPlate;
-                    ptr2->balance = ptr2->balance - (rent_days * ptr->charges);
-                    cout << "\n\t\t\t\t\t\t\tRs." << rent_days * ptr->charges << " were deducted from your account." << endl;
-                    cout << "\t\t\t\t\t\t\tCurrent balance - Rs." << ptr2->balance << endl;
-                    ptr->Count--;
-
-                    ofstream fout;
-                    fout.open("BikesOnRent.txt", ios::app);
-                    fout << ptr2->NameofUser << endl;
-                    fout << ptr->NameofVaahan << endl;
-                    fout << ptr->NumberPlate << endl;
-                    fout << ltm->tm_mday << endl;
-                    fout << 1 + ltm->tm_mon << endl;
-                    fout << 1900 + ltm->tm_year << endl;
-                    fout << rent_days << endl;
-                    fout.close();
-                }
-                else
-                    cout << "\n\t\t\t\t\t\t\tInsufficient funds !\n\t\t\t\t\t\t\tAdd money to your account and try again..." << endl;
+        try (BufferedWriter fout = new BufferedWriter(new FileWriter("Users.txt"))) {
+            Node_User ptr4 = head_user;
+            while (ptr4 != null) {
+                fout.write(ptr4.NameofUser);
+                fout.newLine();
+                fout.write(ptr4.Password);
+                fout.newLine();
+                fout.write(Integer.toString(ptr4.balance));
+                fout.newLine();
+                fout.write(ptr4.LicenseNumber);
+                fout.newLine();
+                fout.write(ptr4.PhoneNumber);
+                fout.newLine();
+                ptr4 = ptr4.next;
             }
-            else
-                cout << "\n\t\t\t\t\t\t\t" << ptr->NameofVaahan << " is currently unavailable." << endl;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        ptr = ptr->next;
     }
-    if (!flag)
-        cout << "\n\t\t\t\t\t\t\tBike not found !" << endl;
 }
 
-// void User::rent(string username)
-// {
-//     int choice;
-//     int rent_days;
-//     do
-//     {
-//         cout << "Which Vaahan would you to rent ?" << endl;
-//         cout << "1.car\n2.bus\n3.bike\n99.back\n>>";
-//         cin >> choice;
-//         switch (choice)
-//         {
-//         case 1:
-//             rentCar(username);
-//             break;
-//         case 2:
-//             rentBus(username);
-//             break;
-//         case 3:
-//             rentBike(username);
-//             break;
-//         case 99:
-//             break;
-//         default:
-//             cout << "Please enter valid input !" << endl;
-//             break;
-//         }
-//     } while (choice != 99);
-// }
+class NodeVaahan {
+    String NameofVaahan;
+    String NumberPlate;
+    String Ventilation;
+    int Count;
+    int charges;
+    NodeVaahan next;
 
-// void User::rentCar(string username)
-// {
-//     int rent_days;
-//     cout << "For how many days would you like to rent ?\n>>";
-//     cin >> rent_days;
-//     cout << "\nWhich car would you like to rent ?\n>>";
-//     string chkcar;
-//     cin >> chkcar;
-//     Node_Vaahan *ptr = head_car;
-//     Node_User *ptr2 = head_user;
-//     while (ptr2 != NULL)
-//     {
-//         if (ptr2->NameofUser == username)
-//             break;
-//         ptr2 = ptr2->next;
-//     }
-//     bool flag = 0;
-//     while (ptr != NULL)
-//     {
-//         if (ptr->NameofVaahan == chkcar)
-//         {
-//             flag = 1;
-//             if (ptr->Count > 0)
-//             {
-//                 if ((rent_days * ptr->charges) < ptr2->balance)
-//                 {
-//                     cout << "Dear customer your Vaahan is booked." << endl;
-//                     cout << "Details - \nName - " << ptr->NameofVaahan << endl;
-//                     cout << "Number - " << ptr->NumberPlate << "\n"
-//                          << ptr->Ventilation << endl;
-//                     ptr2->balance = ptr2->balance - (rent_days * ptr->charges);
-//                     cout << "Rs." << (rent_days * ptr->charges) << " were deducted from your account." << endl;
-//                     cout << "Current balance - Rs." << ptr2->balance << endl;
-//                     ptr->Count--;
-//                     ofstream fout;
-//                     fout.open("CarsOnRent.txt", ios::app);
-//                     fout << ptr2->NameofUser << endl;
-//                     fout << ptr->NameofVaahan << endl;
-//                     fout << ptr->NumberPlate << endl;
-//                     fout << ltm->tm_mday << endl;
-//                     fout << 1 + ltm->tm_mon << endl;
-//                     fout << 1900 + ltm->tm_year << endl;
-//                     fout << rent_days << endl;
-//                     fout.close();
-//                 }
-//                 else
-//                     cout << "Insufficient funds !\nAdd money to your account and try again..." << endl;
-//             }
-//             else
-//                 cout << ptr->NameofVaahan << " is crrently unavailable." << endl;
-//         }
-//         ptr = ptr->next;
-//     }
-//     if (!flag)
-//         cout << "Car not found !" << endl;
-// }
+    NodeVaahan(String NameofVaahan, String NumberPlate, String Ventilation, int Count, int charges) {
+        this.NameofVaahan = NameofVaahan;
+        this.NumberPlate = NumberPlate;
+        this.Ventilation = Ventilation;
+        this.Count = Count;
+        this.charges = charges;
+        this.next = null;
+    }
+}
 
-// void User::rentBus(string username)
-// {
-//     int rent_days;
-//     cout << "For how many days would you like to rent ?\n>>";
-//     cin >> rent_days;
-//     cout << "\nWhich bus would you like to rent ?\n>>";
-//     string chkbus;
-//     cin >> chkbus;
-//     Node_Vaahan *ptr = head_bus;
-//     Node_User *ptr2 = head_user;
-//     while (ptr2 != NULL)
-//     {
-//         if (ptr2->NameofUser == username)
-//             break;
-//         ptr2 = ptr2->next;
-//     }
-//     bool flag = 0;
-//     while (ptr != NULL)
-//     {
-//         if (ptr->NameofVaahan == chkbus)
-//         {
-//             flag = 1;
-//             if (ptr->Count > 0)
-//             {
-//                 if ((rent_days * ptr->charges) < ptr2->balance)
-//                 {
-//                     cout << "Dear customer your Vaahan is booked." << reset << endl;
-//                     cout << "Details - \nName - " << ptr->NameofVaahan << endl;
-//                     cout << "Number - " << ptr->NumberPlate << "\n"
-//                          << ptr->Ventilation << endl;
-//                     ptr2->balance = ptr2->balance - (rent_days * ptr->charges);
-//                     cout << "Rs." << (rent_days * ptr->charges) << " were deducted from your account." << endl;
-//                     cout << "Current balance - Rs." << ptr2->balance << endl;
-//                     ptr->Count--;
-//                     ofstream fout;
-//                     fout.open("BusOnRent.txt", ios::app);
-//                     fout << ptr2->NameofUser << endl;
-//                     fout << ptr->NameofVaahan << endl;
-//                     fout << ptr->NumberPlate << endl;
-//                     fout << ltm->tm_mday << endl;
-//                     fout << 1 + ltm->tm_mon << endl;
-//                     fout << 1900 + ltm->tm_year << endl;
-//                     fout << rent_days << endl;
-//                     fout.close();
-//                 }
-//                 else
-//                     cout << "Insufficient funds !\nAdd money to your account and try again..." << endl;
-//             }
-//             else
-//                 cout << ptr->NameofVaahan << " is crrently unavailable." << endl;
-//         }
-//         ptr = ptr->next;
-//     }
-//     if (!flag)
-//         cout << "Bus not found !" << endl;
-// }
+class Vaahan {
+    NodeVaahan head_car;
+    NodeVaahan head_bus;
+    NodeVaahan head_bike;
 
-// void User::rentBike(string username)
-// {
-//     int rent_days;
-//     cout << "For how many days would you like to rent ?\n>>";
-//     cin >> rent_days;
-//     cout << "\nWhich bike would you like to rent ?\n>>";
-//     string chkbike;
-//     cin >> chkbike;
-//     Node_Vaahan *ptr = head_bike;
-//     Node_User *ptr2 = head_user;
-//     while (ptr2 != NULL)
-//     {
-//         if (ptr2->NameofUser == username)
-//             break;
-//         ptr2 = ptr2->next;
-//     }
-//     bool flag = 0;
-//     while (ptr != NULL)
-//     {
-//         if (ptr->NameofVaahan == chkbike)
-//         {
-//             flag = 1;
-//             if (ptr->Count > 0)
-//             {
-//                 if ((rent_days * ptr->charges) < ptr2->balance)
-//                 {
-//                     cout <<  "Dear customer your Vaahan is booked." << reset << endl;
-//                     cout << "Details - \nName - " << ptr->NameofVaahan << endl;
-//                     cout << "Number - " << ptr->NumberPlate << "\n"
-//                          << ptr->Ventilation << endl;
-//                     ptr2->balance = ptr2->balance - (rent_days * ptr->charges);
-//                     cout << "Rs." << (rent_days * ptr->charges) << " were deducted from your account." << endl;
-//                     cout << "Current balance - Rs." << ptr2->balance << endl;
-//                     ptr->Count--;
-//                     ofstream fout;
-//                     fout.open("BikesOnRent.txt", ios::app);
-//                     fout << ptr2->NameofUser << endl;
-//                     fout << ptr->NameofVaahan << endl;
-//                     fout << ptr->NumberPlate << endl;
-//                     fout << ltm->tm_mday << endl;
-//                     fout << 1 + ltm->tm_mon << endl;
-//                     fout << 1900 + ltm->tm_year << endl;
-//                     fout << rent_days << endl;
-//                     fout.close();
-//                 }
-//                 else
-//                     cout << "Insufficient funds !\nAdd money to your account and try again..." << endl;
-//             }
-//             else
-//                 cout << ptr->NameofVaahan << " is crrently unavailable." << endl;
-//         }
-//         ptr = ptr->next;
-//     }
-//     if (!flag)
-//         cout << "Bike not found !" << endl;
-// }
+    Vaahan() {
+        head_car = null;
+        head_bus = null;
+        head_bike = null;
+    }
 
-void User::add_money(string username)
-{
-    Node_User *ptr = head_user;
-    int addmoney;
-    while (ptr != NULL)
-    {
-        if (ptr->NameofUser == username)
-        {
-            system("cls");
-            cout << endl
-                 << endl;
-            char a[] = "\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb ADD MONEY \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-            int size;
-            size = strlen(a);
-            for (int i = 0; i < size; i++)
-            {
-                Sleep(1);
-                cout << a[i];
+    // Methods to insert and manage vehicles can be added here
+}
+
+class NodeUser {
+    String NameofUser;
+    String Password;
+    int balance;
+    String LicenseNumber;
+    String PhoneNumber;
+    NodeUser next;
+
+    NodeUser(String NameofUser, String Password, int balance, String LicenseNumber, String PhoneNumber) {
+        this.NameofUser = NameofUser;
+        this.Password = Password;
+        this.balance = balance;
+        this.LicenseNumber = LicenseNumber;
+        this.PhoneNumber = PhoneNumber;
+        this.next = null;
+    }
+}
+
+class User extends Vaahan {
+    NodeUser head_user;
+
+    User() {
+        head_user = null;
+    }
+
+    void insertNodeUser(String NameofUser, String Password, int balance, String LicenseNumber, String PhoneNumber) {
+        NodeUser newNode = new NodeUser(NameofUser, Password, balance, LicenseNumber, PhoneNumber);
+
+        if (head_user == null) {
+            head_user = newNode;
+            return;
+        }
+
+        NodeUser temp = head_user;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        temp.next = newNode;
+    }
+
+    void createUserList() {
+        try (BufferedReader fin = new BufferedReader(new FileReader("Users.txt"))) {
+            String NameofUser1;
+            String Password1;
+            int balance1;
+            String LicenseNumber1;
+            String PhoneNumber1;
+
+            while ((NameofUser1 = fin.readLine()) != null) {
+                Password1 = fin.readLine();
+                balance1 = Integer.parseInt(fin.readLine().trim());
+                LicenseNumber1 = fin.readLine();
+                PhoneNumber1 = fin.readLine();
+                insertNodeUser(NameofUser1, Password1, balance1, LicenseNumber1, PhoneNumber1);
             }
-            cout << "\n\t\t\t\t\t\t\tEnter the amount you want to add (in rupees): ";
-            cin >> addmoney;
-            ptr->balance = ptr->balance + addmoney;
-            cout << "\t\t\t\t\t\t\tMoney added to your account successfully !" << endl;
-            cout << "\t\t\t\t\t\t\tBalance - Rs." << ptr->balance << reset << endl;
+        } catch (IOException e) {
+            System.out.println("Error reading Users.txt file!");
         }
-        ptr = ptr->next;
     }
-}
 
-void User::returnVaahan(string username)
-{
-    system("cls");
-    int choice;
-    do
-    {
-        cout << endl
-             << endl;
-        char a[] = "\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RETURN VAAHAN \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-        int size;
-        size = strlen(a);
-        for (int i = 0; i < size; i++)
-        {
-            Sleep(1);
-            cout << a[i];
-        }
-        cout << "\n\t\t\t\t\t\t\tSelect the type of vaahan you want to return - " << endl;
-        cout << "\t\t\t\t\t\t\t1.car\n\t\t\t\t\t\t\t2.bus\n\t\t\t\t\t\t\t3.bike\n\t\t\t\t\t\t\t99.back\n\n\t\t\t\t\t\t\tYour choice : ";
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            returnCar(username);
-            break;
-        case 2:
-            returnBus(username);
-            break;
-        case 3:
-            returnBike(username);
-            break;
-        case 99:
-            break;
-        default:
-            system("cls");
-            cout << "\t\t\t\t\t\t\tPlease enter valid input !" << endl;
-            break;
-        }
-    } while (choice != 99);
-}
+    void displayAllUsers() {
+        NodeUser temp = head_user;
+        System.out.println("\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb USERS LIST \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
 
-void User::returnCar(string username)
-{
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RETURN CAR \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
+        if (head_user == null) {
+            System.out.println("\n\t\t\t\t\t\t\tList empty");
+            return;
+        }
+
+        while (temp != null) {
+            System.out.println("\n\t\t\t\t\t\t\tName - " + temp.NameofUser);
+            System.out.println("\n\t\t\t\t\t\t\tPassword - " + temp.Password);
+            System.out.println("\n\t\t\t\t\t\t\tBalance - Rs." + temp.balance);
+            System.out.println("\n\t\t\t\t\t\t\tLicense number - " + temp.LicenseNumber);
+            System.out.println("\n\t\t\t\t\t\t\tPhone number - " + temp.PhoneNumber);
+            System.out.println("\n\t\t\t\t\t\t\t*************************************");
+            temp = temp.next;
+        }
+        System.out.println();
     }
-    string NameofVaahan1;
-    string NumberPlate1;
-    cout << "\n\t\t\t\t\t\t\tEnter the name of car : ";
-    cin >> NameofVaahan1;
-    cout << "\n\t\t\t\t\t\t\tEnter the number plate of car : ";
-    cin >> NumberPlate1;
-    bool flag = 1, flag2 = 1;
-    ifstream fin;
-    string chkNameofVaahan;
-    string chkNumberPlate;
-    string chkusername;
-    int rent_days2;
-    int day2, month2, year2;
-    int dateReturn[3] = {ltm->tm_mday, ltm->tm_mon, ltm->tm_year};
-    fin.open("CarsOnRent.txt");
-    while (!fin.eof())
-    {
-        getline(fin >> ws, chkusername);
-        getline(fin >> ws, chkNameofVaahan);
-        getline(fin >> ws, chkNumberPlate);
-        fin >> day2 >> ws;
-        fin >> month2 >> ws;
-        fin >> year2 >> ws;
-        fin >> rent_days2 >> ws;
-        if (chkusername == username)
-        {
-            flag = 0;
-            if (chkNameofVaahan == NameofVaahan1 && chkNumberPlate == NumberPlate1)
-            {
-                flag2 = 0;
-                int dateIssue[3] = {day2, month2, year2};
-                Node_User *ptr1 = head_user;
-                Node_Vaahan *ptr2 = head_car;
 
-                cout << "\n\t\t\t\t\t\t\t" << NameofVaahan1 << " - " << NumberPlate1 << " returned successfully !" << endl;
+    void displayMyDetails(String username) {
+        NodeUser temp = head_user;
 
-                while (ptr2 != NULL)
-                {
-                    if (ptr2->NameofVaahan == NameofVaahan1)
-                    {
-                        ptr2->Count++;
-                    }
-                    ptr2 = ptr2->next;
-                }
+        if (head_user == null) {
+            System.out.println("\n\n\t\t\t\t\t\t\tList empty");
+            return;
+        }
 
-                // fine for late return
-                if (countNoOfDays(dateIssue, dateReturn) > rent_days2)
-                {
-                    int LateDays = countNoOfDays(dateIssue, dateReturn) - rent_days2;
-                    cout << "\t\t\t\t\t\t\tYou have to pay fine of Rs." << LateDays * 300 << "/- for " << LateDays << " days of late return." << endl;
-                    ptr1->balance = ptr1->balance - (LateDays)*300;
-                    cout << "\t\t\t\t\t\t\tBalance - Rs." << ptr1->balance << endl;
-                }
-                else
-                {
-                    while (ptr1 != NULL)
-                    {
-                        if (ptr1->NameofUser == username)
-                        {
-                            ptr1->balance = ptr1->balance + 20;
-                            cout << "\t\t\t\t\t\t\tYayyy! You earned Rs.20 Loyalty bonus !" << endl;
-                            cout << "\t\t\t\t\t\t\tBalance - Rs." << ptr1->balance << endl;
+        while (temp != null) {
+            if (temp.NameofUser.equals(username)) {
+                System.out.println("\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb MY DETAILS \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
+                System.out.println("\n\t\t\t\t\t\t\tName - " + temp.NameofUser);
+                System.out.println("\t\t\t\t\t\t\tPassword - " + temp.Password);
+                System.out.println("\t\t\t\t\t\t\tBalance - Rs." + temp.balance);
+                System.out.println("\t\t\t\t\t\t\tLicense number - " + temp.LicenseNumber);
+                System.out.println("\t\t\t\t\t\t\tPhone number - " + temp.PhoneNumber);
+                System.out.println("\t\t\t\t\t\t\t*************************************");
+            }
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+    void rent(String username) {
+        Scanner sc = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RENT A VAAHAN \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
+            System.out.println("\n\t\t\t\t\t\t\tWhich Vaahan would you like to rent?");
+            System.out.println("\t\t\t\t\t\t\t1. Car\n\t\t\t\t\t\t\t2. Bus\n\t\t\t\t\t\t\t3. Bike\n\t\t\t\t\t\t\t99. Back\n\n\t\t\t\t\t\t\tYour choice: ");
+
+            choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    rentCar(username);
+                    break;
+                case 2:
+                    rentBus(username);
+                    break;
+                case 3:
+                    rentBike(username);
+                    break;
+                case 99:
+                    break;
+                default:
+                    System.out.println("\n\n\t\t\t\t\t\t\tPlease enter valid input!");
+                    break;
+            }
+        } while (choice != 99);
+    }
+
+    void rentCar(String username) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RENT CAR \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
+        System.out.println("\n\t\t\t\t\t\t\tEnter the no of days for which you would like to rent the car: ");
+        int rent_days = sc.nextInt();
+        System.out.println("\n\t\t\t\t\t\t\tEnter car name which you would like to rent: ");
+        String chkcar = sc.next();
+
+        NodeVaahan ptr = head_car;
+        NodeUser ptr2 = head_user;
+        while (ptr2 != null) {
+            if (ptr2.NameofUser.equals(username)) {
+                break;
+            }
+            ptr2 = ptr2.next;
+        }
+
+        boolean flag = false;
+
+        while (ptr != null) {
+            if (ptr.NameofVaahan.equals(chkcar)) {
+                flag = true;
+                if (ptr.Count > 0) {
+                    if ((rent_days * ptr.charges) < ptr2.balance) {
+                        System.out.println("\t\t\t\t\t\t\tDear customer, your Vaahan is booked.");
+                        System.out.println("\n\t\t\t\t\t\t\tDetails - \n\t\t\t\t\t\t\tName - " + ptr.NameofVaahan);
+                        System.out.println("\t\t\t\t\t\t\tNumber - " + ptr.NumberPlate + "\n\t\t\t\t\t\t\tVentilation type - " + ptr.Ventilation);
+                        ptr2.balance -= (rent_days * ptr.charges);
+                        System.out.println("\t\t\t\t\t\t\tRs." + (rent_days * ptr.charges) + " were deducted from your account.");
+                        System.out.println("\t\t\t\t\t\t\tCurrent balance - Rs." + ptr2.balance);
+                        ptr.Count--;
+
+                        try (PrintWriter fout = new PrintWriter(new BufferedWriter(new FileWriter("CarsOnRent.txt", true)))) {
+                            fout.println(ptr2.NameofUser);
+                            fout.println(ptr.NameofVaahan);
+                            fout.println(ptr.NumberPlate);
+                            fout.println(java.time.LocalDate.now().getDayOfMonth());
+                            fout.println(java.time.LocalDate.now().getMonthValue());
+                            fout.println(java.time.LocalDate.now().getYear());
+                            fout.println(rent_days);
+                        } catch (IOException e) {
+                            System.out.println("Error writing to CarsOnRent.txt file!");
                         }
-                        ptr1 = ptr1->next;
+                    } else {
+                        System.out.println("\n\t\t\t\t\t\t\tInsufficient funds!\n\t\t\t\t\t\t\tAdd money to your account and try again...");
                     }
+                } else {
+                    System.out.println("\n\t\t\t\t\t\t\t" + ptr.NameofVaahan + " is currently unavailable.");
                 }
             }
+            ptr = ptr.next;
         }
+        if (!flag) {
+            System.out.println("\n\t\t\t\t\t\tnot found\n");
+        }
+        /*
+         void rent(String username) {
+        Scanner sc = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("\n\nWhich Vaahan would you like to rent?");
+            System.out.println("1. Car\n2. Bus\n3. Bike\n99. Back\nYour choice: ");
+
+            choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    rentCar(username);
+                    break;
+                case 2:
+                    rentBus(username);
+                    break;
+                case 3:
+                    rentBike(username);
+                    break;
+                case 99:
+                    break;
+                default:
+                    System.out.println("\n\nPlease enter valid input!");
+                    break;
+            }
+        } while (choice != 99);
     }
-    if (flag2)
-        cout << "\t\t\t\t\t\t\tCar and its number you are trying to return doesn't match !\n\t\t\t\t\t\t\tTry again..." << endl;
-    if (flag)
-        cout << "\t\t\t\t\t\t\tNo user found to return any Vaahan type you've chosen." << endl;
-}
 
-void User::returnBus(string username)
-{
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RETURN BUS \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
+    void rentCar(String username) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("For how many days would you like to rent?");
+        int rent_days = sc.nextInt();
+        System.out.println("\nWhich car would you like to rent?");
+        String chkcar = sc.next();
 
-    string NameofVaahan1;
-    string NumberPlate1;
-    cout << "\t\t\t\t\t\t\tEnter the name of bus : ";
-    cin >> NameofVaahan1;
-    cout << "\t\t\t\t\t\t\tEnter the number plate of bus : ";
-    cin >> NumberPlate1;
-    bool flag = 1, flag2 = 1;
-    ifstream fin;
-    string chkNameofVaahan;
-    string chkNumberPlate;
-    string chkusername;
-    int rent_days2;
-    int day2, month2, year2;
-    int dateReturn[3] = {ltm->tm_mday, ltm->tm_mon, ltm->tm_year};
-    fin.open("BusOnRent.txt");
-    while (!fin.eof())
-    {
-        getline(fin >> ws, chkusername);
-        getline(fin >> ws, chkNameofVaahan);
-        getline(fin >> ws, chkNumberPlate);
-        fin >> day2 >> ws;
-        fin >> month2 >> ws;
-        fin >> year2 >> ws;
-        fin >> rent_days2 >> ws;
-        if (chkusername == username)
-        {
-            flag = 0;
-            if (chkNameofVaahan == NameofVaahan1 && chkNumberPlate == NumberPlate1)
-            {
-                flag2 = 0;
-                int dateIssue[3] = {day2, month2, year2};
-                Node_User *ptr1 = head_user;
-                Node_Vaahan *ptr2 = head_bus;
+        NodeVaahan ptr = head_car;
+        NodeUser ptr2 = head_user;
+        while (ptr2 != null) {
+            if (ptr2.NameofUser.equals(username)) {
+                break;
+            }
+            ptr2 = ptr2.next;
+        }
 
-                cout << "\n\t\t\t\t\t\t\t" << NameofVaahan1 << " - " << NumberPlate1 << " returned successfully !" << endl;
+        boolean flag = false;
 
-                while (ptr2 != NULL)
-                {
-                    if (ptr2->NameofVaahan == NameofVaahan1)
-                    {
-                        ptr2->Count++;
-                    }
-                    ptr2 = ptr2->next;
-                }
+        while (ptr != null) {
+            if (ptr.NameofVaahan.equals(chkcar)) {
+                flag = true;
+                if (ptr.Count > 0) {
+                    if ((rent_days * ptr.charges) < ptr2.balance) {
+                        System.out.println("Dear customer, your Vaahan is booked.");
+                        System.out.println("Details - \nName - " + ptr.NameofVaahan);
+                        System.out.println("Number - " + ptr.NumberPlate + "\n" + ptr.Ventilation);
+                        ptr2.balance -= (rent_days * ptr.charges);
+                        System.out.println("Rs." + (rent_days * ptr.charges) + " were deducted from your account.");
+                        System.out.println("Current balance - Rs." + ptr2.balance);
+                        ptr.Count--;
 
-                // fine for late return
-                if (countNoOfDays(dateIssue, dateReturn) > rent_days2)
-                {
-                    int LateDays = countNoOfDays(dateIssue, dateReturn) - rent_days2;
-                    cout << "\t\t\t\t\t\t\tYou have to pay fine of Rs." << LateDays * 400 << "/- for " << LateDays << " days of late return." << endl;
-                    ptr1->balance = ptr1->balance - (LateDays)*300;
-                    cout << "\t\t\t\t\t\t\tBalance - Rs." << ptr1->balance << endl;
-                }
-                else
-                {
-                    while (ptr1 != NULL)
-                    {
-                        if (ptr1->NameofUser == username)
-                        {
-                            ptr1->balance = ptr1->balance + 30;
-                            cout << "\t\t\t\t\t\t\tYayyy! You earned Rs.30 Loyalty bonus !" << endl;
-                            cout << "\t\t\t\t\t\t\tBalance - Rs." << ptr1->balance << endl;
+                        try (PrintWriter fout = new PrintWriter(new BufferedWriter(new FileWriter("CarsOnRent.txt", true)))) {
+                            fout.println(ptr2.NameofUser);
+                            fout.println(ptr.NameofVaahan);
+                            fout.println(ptr.NumberPlate);
+                            Calendar calendar = Calendar.getInstance();
+                            fout.println(calendar.get(Calendar.DAY_OF_MONTH));
+                            fout.println(calendar.get(Calendar.MONTH) + 1);
+                            fout.println(calendar.get(Calendar.YEAR));
+                            fout.println(rent_days);
+                        } catch (IOException e) {
+                            System.out.println("Error writing to CarsOnRent.txt file!");
                         }
-                        ptr1 = ptr1->next;
+                    } else {
+                        System.out.println("Insufficient funds!\nAdd money to your account and try again...");
                     }
+                } else {
+                    System.out.println(ptr.NameofVaahan + " is currently unavailable.");
                 }
             }
+            ptr = ptr.next;
+        }
+        if (!flag) {
+            System.out.println("Car not found!");
         }
     }
-    if (flag)
-        cout << "\t\t\t\t\t\t\tNo user found to return any Vaahan type you've chosen." << endl;
-    if (flag2)
-        cout << "\t\t\t\t\t\t\tBus and its number you are trying to return doesn't match !\n\t\t\t\t\t\t\tTry again..." << endl;
-}
 
-void User::returnBike(string username)
-{
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RETURN BIKE \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    string NameofVaahan1;
-    string NumberPlate1;
-    cout << "\n\t\t\t\t\t\t\tEnter the name of bike : ";
-    cin >> NameofVaahan1;
-    cout << "\t\t\t\t\t\t\tEnter the number plate of bike : ";
-    cin >> NumberPlate1;
-    bool flag = 1, flag2 = 1;
-    ifstream fin;
-    string chkNameofVaahan;
-    string chkNumberPlate;
-    string chkusername;
-    int rent_days2;
-    int day2, month2, year2;
-    int dateReturn[3] = {ltm->tm_mday, ltm->tm_mon, ltm->tm_year};
-    fin.open("BikesOnRent.txt");
-    while (!fin.eof())
-    {
-        getline(fin >> ws, chkusername);
-        getline(fin >> ws, chkNameofVaahan);
-        getline(fin >> ws, chkNumberPlate);
-        fin >> day2 >> ws;
-        fin >> month2 >> ws;
-        fin >> year2 >> ws;
-        fin >> rent_days2 >> ws;
+    void rentBus(String username) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("For how many days would you like to rent?");
+        int rent_days = sc.nextInt();
+        System.out.println("\nWhich bus would you like to rent?");
+        String chkbus = sc.next();
 
-        if (chkusername == username)
-        {
-            flag = 0;
-            if (chkNameofVaahan == NameofVaahan1 && chkNumberPlate == NumberPlate1)
-            {
-                flag2 = 0;
-                int dateIssue[3] = {day2, month2, year2};
-                Node_User *ptr1 = head_user;
-                Node_Vaahan *ptr2 = head_bike;
+        NodeVaahan ptr = head_bus;
+        NodeUser ptr2 = head_user;
+        while (ptr2 != null) {
+            if (ptr2.NameofUser.equals(username)) {
+                break;
+            }
+            ptr2 = ptr2.next;
+        }
 
-                cout << "\n\t\t\t\t\t\t\t" << NameofVaahan1 << " - " << NumberPlate1 << " returned successfully !" << endl;
+        boolean flag = false;
 
-                while (ptr2 != NULL)
-                {
-                    if (ptr2->NameofVaahan == NameofVaahan1)
-                    {
-                        ptr2->Count++;
-                    }
-                    ptr2 = ptr2->next;
-                }
+        while (ptr != null) {
+            if (ptr.NameofVaahan.equals(chkbus)) {
+                flag = true;
+                if (ptr.Count > 0) {
+                    if ((rent_days * ptr.charges) < ptr2.balance) {
+                        System.out.println("Dear customer, your Vaahan is booked.");
+                        System.out.println("Details - \nName - " + ptr.NameofVaahan);
+                        System.out.println("Number - " + ptr.NumberPlate + "\n" + ptr.Ventilation);
+                        ptr2.balance -= (rent_days * ptr.charges);
+                        System.out.println("Rs." + (rent_days * ptr.charges) + " were deducted from your account.");
+                        System.out.println("Current balance - Rs." + ptr2.balance);
+                        ptr.Count--;
 
-                // fine for late return
-                if (countNoOfDays(dateIssue, dateReturn) > rent_days2)
-                {
-                    int LateDays = countNoOfDays(dateIssue, dateReturn) - rent_days2;
-                    cout << "\t\t\t\t\t\t\tYou have to pay fine of Rs." << LateDays * 200 << "/- for " << LateDays << " days of late return." << endl;
-                    ptr1->balance = ptr1->balance - (LateDays)*300;
-                    cout << "\t\t\t\t\t\t\tBalance - Rs." << ptr1->balance << endl;
-                }
-                else
-                {
-                    while (ptr1 != NULL)
-                    {
-                        if (ptr1->NameofUser == username)
-                        {
-                            ptr1->balance = ptr1->balance + 20;
-                            cout << "\t\t\t\t\t\t\tYayyy! You earned Rs.10 Loyalty bonus !" << endl;
-                            cout << "\t\t\t\t\t\t\tBalance - Rs." << ptr1->balance << endl;
+                        try (PrintWriter fout = new PrintWriter(new BufferedWriter(new FileWriter("BusOnRent.txt", true)))) {
+                            fout.println(ptr2.NameofUser);
+                            fout.println(ptr.NameofVaahan);
+                            fout.println(ptr.NumberPlate);
+                            Calendar calendar = Calendar.getInstance();
+                            fout.println(calendar.get(Calendar.DAY_OF_MONTH));
+                            fout.println(calendar.get(Calendar.MONTH) + 1);
+                            fout.println(calendar.get(Calendar.YEAR));
+                            fout.println(rent_days);
+                        } catch (IOException e) {
+                            System.out.println("Error writing to BusOnRent.txt file!");
                         }
-                        ptr1 = ptr1->next;
+                    } else {
+                        System.out.println("Insufficient funds!\nAdd money to your account and try again...");
                     }
+                } else {
+                    System.out.println(ptr.NameofVaahan + " is currently unavailable.");
                 }
             }
+            ptr = ptr.next;
+        }
+        if (!flag) {
+            System.out.println("Bus not found!");
         }
     }
-    if (flag)
-        cout << "\t\t\t\t\t\t\tNo user found to return any Vaahan type you've chosen." << endl;
-    if (flag2)
-        cout << "\t\t\t\t\t\t\tBike and its number you are trying to return doesn't match !\n\t\t\t\t\t\t\tTry again..." << endl;
-}
 
-//========================Vaahan class functions=======================//
+    void rentBike(String username) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("For how many days would you like to rent?");
+        int rent_days = sc.nextInt();
+        System.out.println("\nWhich bike would you like to rent?");
+        String chkbike = sc.next();
 
-void Vaahan::insertNodecar(string NameofVaahan, string NumberPlate, string Ventilation, int Count, int charges)
-{
-    Node_Vaahan *newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
-    if (head_car == NULL)
-    {
-        head_car = newNode;
-        return;
-    }
-    Node_Vaahan *temp = head_car;
-    while (temp->next != NULL)
-        temp = temp->next;
-
-    temp->next = newNode;
-}
-
-void Vaahan::insertNodebus(string NameofVaahan, string NumberPlate, string Ventilation, int Count, int charges)
-{
-    Node_Vaahan *newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
-    if (head_bus == NULL)
-    {
-        head_bus = newNode;
-        return;
-    }
-    Node_Vaahan *temp = head_bus;
-    while (temp->next != NULL)
-        temp = temp->next;
-
-    temp->next = newNode;
-}
-
-void Vaahan::insertNodebike(string NameofVaahan, string NumberPlate, string Ventilation, int Count, int charges)
-{
-    Node_Vaahan *newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
-    if (head_bike == NULL)
-    {
-        head_bike = newNode;
-        return;
-    }
-    Node_Vaahan *temp = head_bike;
-    while (temp->next != NULL)
-        temp = temp->next;
-
-    temp->next = newNode;
-}
-
-void Vaahan::createcarList()
-{
-    ifstream fin;
-    string NameofVaahan1;
-    string NumberPlate1;
-    string Ventilation1;
-    int Count1;
-    int charges1;
-    fin.open("cars.txt");
-    while (!fin.eof())
-    {
-        getline(fin >> ws, NameofVaahan1);
-        getline(fin >> ws, NumberPlate1);
-        getline(fin >> ws, Ventilation1);
-        fin >> Count1 >> ws;
-        fin >> charges1 >> ws;
-        insertNodecar(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
-    }
-    fin.close();
-}
-
-void Vaahan::createbusList()
-{
-    ifstream fin;
-    string NameofVaahan1;
-    string NumberPlate1;
-    string Ventilation1;
-    int Count1;
-    int charges1;
-    fin.open("bus.txt");
-    while (!fin.eof())
-    {
-        getline(fin >> ws, NameofVaahan1);
-        getline(fin >> ws, NumberPlate1);
-        getline(fin >> ws, Ventilation1);
-        fin >> Count1 >> ws;
-        fin >> charges1 >> ws;
-        insertNodebus(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
-    }
-    fin.close();
-}
-
-void Vaahan::createbikeList()
-{
-    ifstream fin;
-    string NameofVaahan1;
-    string NumberPlate1;
-    string Ventilation1;
-    int Count1;
-    int charges1;
-    fin.open("bikes.txt");
-    while (!fin.eof())
-    {
-        getline(fin >> ws, NameofVaahan1);
-        getline(fin >> ws, NumberPlate1);
-        getline(fin >> ws, Ventilation1);
-        fin >> Count1 >> ws;
-        fin >> charges1 >> ws;
-        insertNodebike(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
-    }
-    fin.close();
-}
-
-void Vaahan::display_all_Vaahan()
-{
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb ALL VAAHAN LIST \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    int choice;
-    do
-    {
-        cout << "\n\t\t\t\t\t\t\tChoose type of Vaahan\n\t\t\t\t\t\t\t1.Car.\n\t\t\t\t\t\t\t2.Bus.\n\t\t\t\t\t\t\t3.Bike.\n\t\t\t\t\t\t\t99.back.\n\n\t\t\t\t\t\t\tYour choice : ";
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            display_all_cars();
-            break;
-        case 2:
-            display_all_bus();
-            break;
-        case 3:
-            display_all_bikes();
-            break;
-        case 99:
-            break;
-        default:
-            system("cls");
-            cout << "\t\t\t\t\t\t\tPlease enter valid input !" << endl;
-            break;
+        NodeVaahan ptr = head_bike;
+        NodeUser ptr2 = head_user;
+        while (ptr2 != null) {
+            if (ptr2.NameofUser.equals(username)) {
+                break;
+            }
+            ptr2 = ptr2.next;
         }
 
-    } while (choice != 99);
-}
+        boolean flag = false;
 
-void Vaahan::display_all_cars()
-{
-    Node_Vaahan *temp = head_car;
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb ALL CARS \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    if (head_car == NULL)
-    {
-        cout << "\n\t\t\t\t\t\t\tList empty" << endl;
-        return;
-    }
+        while (ptr != null) {
+            if (ptr.NameofVaahan.equals(chkbike)) {
+                flag = true;
+                if (ptr.Count > 0) {
+                    if ((rent_days * ptr.charges) < ptr2.balance) {
+                        System.out.println("Dear customer, your Vaahan is booked.");
+                        System.out.println("Details - \nName - " + ptr.NameofVaahan);
+                        System.out.println("Number - " + ptr.NumberPlate + "\n" + ptr.Ventilation);
+                        ptr2.balance -= (rent_days * ptr.charges);
+                        System.out.println("Rs." + (rent_days * ptr.charges) + " were deducted from your account.");
+                        System.out.println("Current balance - Rs." + ptr2.balance);
+                        ptr.Count--;
 
-    while (temp != NULL)
-    {
-        cout << "\n\t\t\t\t\t\t\tName - " << temp->NameofVaahan << endl;
-        cout << "\t\t\t\t\t\t\tNumber plate - " << temp->NumberPlate << endl;
-        cout << "\t\t\t\t\t\t\tventilation type - " << temp->Ventilation << endl;
-        cout << "\t\t\t\t\t\t\tCharges per hour - Rs." << temp->charges << endl;
-        temp = temp->next;
-        cout << "\t\t\t\t\t\t\t*************************************" << endl;
-    }
-    cout << "\n";
-}
+                        try (PrintWriter fout = new PrintWriter(new BufferedWriter(new FileWriter("BikesOnRent.txt", true)))) {
+                            fout.println(ptr2.NameofUser);
+                            fout.println(ptr.NameofVaahan);
+                            fout
+         */     
+            public void addMoney(String username) {
+                Node_User ptr = head_user;
+                Scanner scanner = new Scanner(System.in);
+                int addMoney;
+                while (ptr != null) {
+                    if (ptr.NameofUser.equals(username)) {
+                        System.out.println("\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb ADD MONEY \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
+                        System.out.print("\t\t\t\t\t\t\tEnter the amount you want to add (in rupees): ");
+                        addMoney = scanner.nextInt();
+                        ptr.balance += addMoney;
+                        System.out.println("\t\t\t\t\t\t\tMoney added to your account successfully !");
+                        System.out.println("\t\t\t\t\t\t\tBalance - Rs." + ptr.balance);
+                    }
+                    ptr = ptr.next;
+                }
+            }
+        
+            public void returnVaahan(String username) {
+                Scanner scanner = new Scanner(System.in);
+                int choice;
+                do {
+                    System.out.println("\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RETURN VAAHAN \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
+                    System.out.println("\t\t\t\t\t\t\tSelect the type of vaahan you want to return - ");
+                    System.out.println("\t\t\t\t\t\t\t1.car\n\t\t\t\t\t\t\t2.bus\n\t\t\t\t\t\t\t3.bike\n\t\t\t\t\t\t\t99.back\n\n\t\t\t\t\t\t\tYour choice : ");
+                    choice = scanner.nextInt();
+                    switch (choice) {
+                        case 1:
+                            returnCar(username);
+                            break;
+                        case 2:
+                            returnBus(username);
+                            break;
+                        case 3:
+                            returnBike(username);
+                            break;
+                        case 99:
+                            break;
+                        default:
+                            System.out.println("\t\t\t\t\t\t\tPlease enter valid input !");
+                            break;
+                    }
+                } while (choice != 99);
+            }
+        
+            public void returnCar(String username) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RETURN CAR \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
+                System.out.print("\t\t\t\t\t\t\tEnter the name of car: ");
+                String NameofVaahan1 = scanner.next();
+                System.out.print("\t\t\t\t\t\t\tEnter the number plate of car: ");
+                String NumberPlate1 = scanner.next();
+                boolean flag = true, flag2 = true;
+                try (BufferedReader fin = new BufferedReader(new FileReader("CarsOnRent.txt"))) {
+                    String chkNameofVaahan, chkNumberPlate, chkusername;
+                    int rent_days2, day2, month2, year2;
+                    int[] dateReturn = {ltm.tm_mday, ltm.tm_mon, ltm.tm_year};
+                    String line;
+                    while ((line = fin.readLine()) != null) {
+                        chkusername = line.trim();
+                        chkNameofVaahan = fin.readLine().trim();
+                        chkNumberPlate = fin.readLine().trim();
+                        day2 = Integer.parseInt(fin.readLine().trim());
+                        month2 = Integer.parseInt(fin.readLine().trim());
+                        year2 = Integer.parseInt(fin.readLine().trim());
+                        rent_days2 = Integer.parseInt(fin.readLine().trim());
+                        if (chkusername.equals(username)) {
+                            flag = false;
+                            if (chkNameofVaahan.equals(NameofVaahan1) && chkNumberPlate.equals(NumberPlate1)) {
+                                flag2 = false;
+                                int[] dateIssue = {day2, month2, year2};
+                                Node_User ptr1 = head_user;
+                                Node_Vaahan ptr2 = head_car;
+        
+                                System.out.println("\n\t\t\t\t\t\t\t" + NameofVaahan1 + " - " + NumberPlate1 + " returned successfully !");
+        
+                                while (ptr2 != null) {
+                                    if (ptr2.NameofVaahan.equals(NameofVaahan1)) {
+                                        ptr2.Count++;
+                                    }
+                                    ptr2 = ptr2.next;
+                                }
+        
+                                // fine for late return
+                                if (countNoOfDays(dateIssue, dateReturn) > rent_days2) {
+                                    int LateDays = countNoOfDays(dateIssue, dateReturn) - rent_days2;
+                                    System.out.println("\t\t\t\t\t\t\tYou have to pay fine of Rs." + LateDays * 300 + "/- for " + LateDays + " days of late return.");
+                                    ptr1.balance -= LateDays * 300;
+                                    System.out.println("\t\t\t\t\t\t\tBalance - Rs." + ptr1.balance);
+                                } else {
+                                    while (ptr1 != null) {
+                                        if (ptr1.NameofUser.equals(username)) {
+                                            ptr1.balance += 20;
+                                            System.out.println("\t\t\t\t\t\t\tYayyy! You earned Rs.20 Loyalty bonus !");
+                                            System.out.println("\t\t\t\t\t\t\tBalance - Rs." + ptr1.balance);
+                                        }
+                                        ptr1 = ptr1.next;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (flag2)
+                        System.out.println("\t\t\t\t\t\t\tCar and its number you are trying to return doesn't match !\n\t\t\t\t\t\t\tTry again...");
+                    if (flag)
+                        System.out.println("\t\t\t\t\t\t\tNo user found to return any Vaahan type you've chosen.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        
+            public void returnBus(String username) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb RETURN BUS \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n");
+                System.out.print("\t\t\t\t\t\t\tEnter the name of bus: ");
+                String NameofVaahan1 = scanner.next();
+                System.out.print("\t\t\t\t\t\t\tEnter the number plate of bus: ");
+                String NumberPlate1 = scanner.next();
+                boolean flag = true, flag2 = true;
+                try (BufferedReader fin = new BufferedReader(new FileReader("BusOnRent.txt"))) {
+                    String chkNameofVaahan, chkNumberPlate, chkusername;
+                    int rent_days2, day2, month2, year2;
+                    int[] dateReturn = {ltm.tm_mday, ltm.tm_mon, ltm.tm_year};
+                    String line;
+                    while ((line = fin.readLine()) != null) {
+                        chkusername = line.trim();
+                        chkNameofVaahan = fin.readLine().trim();
+                        chkNumberPlate = fin.readLine().trim();
+                        day2 = Integer.parseInt(fin.readLine().trim());
+                        month2 = Integer.parseInt(fin.readLine().trim());
+                        year2 = Integer.parseInt(fin.readLine().trim());
+                        rent_days2 = Integer.parseInt(fin.readLine().trim());
+                        if (chkusername.equals(username)) {
+                            flag = false;
+                            if (chkNameofVaahan.equals(NameofVaahan1) && chkNumberPlate.equals(NumberPlate1)) {
+                                flag2 = false;
+                                int[] dateIssue = {day2, month2, year2};
+                                Node_User ptr1 = head_user;
+                                Node_Vaahan ptr2 = head_bus;
+        
+                                System.out.println("\n\t\t\t\t\t\t\t" + NameofVaahan1 + " - " + NumberPlate1 + " returned successfully !");
+        
+                                while (ptr2 != null) {
+                                    if (ptr2.NameofVaahan.equals(NameofVaahan1)) {
+                                        ptr2.Count++;
+                                    }
+                                    ptr2 = ptr2.next;
+                                }
+        
+                                // fine for late return
+                                if (countNoOfDays(dateIssue, dateReturn) > rent_days2) {
+                                    int LateDays = countNoOfDays(dateIssue, dateReturn) - rent_days2;
+                                    System.out.println("\t\t\t\t\t\t\tYou have to pay fine of Rs." + LateDays * 400 + "/- for " + LateDays + " days of late return.");
+                                    ptr1.balance -= LateDays * 300;
+                                    System.out.println("\t\t\t\t\t\t\tBalance - Rs." + ptr1.balance);
+                                } else {
+                                    while (ptr1 != null) {
+                                        if (ptr1.NameofUser.equals(username)) {
+                                            ptr1.balance += 30;
+                                            System.out.println("\t\t\t\t\t\t\tYayyy! You earned Rs.30 Loyalty bonus !");
+                                            System.out.println("\t\t\t\t\t\t\tBalance - Rs." + ptr1.balance);
+                                        }
+                                        ptr1 = ptr1.next;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (flag2)
+                        System.out.println("\t\t\t\t\t\t\tBus and its number you are trying to return doesn't match !\n\t\t\t\t\t\t\tTry again...");
+                    if (flag)
+                        System.out.println("\t\t\t\t\t\t\tNo user found to return any Vaahan type you've chosen.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            void insertNodecar(String NameofVaahan, String NumberPlate, String Ventilation, int Count, int charges) {
+                Node_Vaahan newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
+                if (head_car == null) {
+                    head_car = newNode;
+                    return;
+                }
+                Node_Vaahan temp = head_car;
+                while (temp.next != null) temp = temp.next;
+                temp.next = newNode;
+            }
+        
+            void insertNodebus(String NameofVaahan, String NumberPlate, String Ventilation, int Count, int charges) {
+                Node_Vaahan newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
+                if (head_bus == null) {
+                    head_bus = newNode;
+                    return;
+                }
+                Node_Vaahan temp = head_bus;
+                while (temp.next != null) temp = temp.next;
+                temp.next = newNode;
+            }
+        
+            void insertNodebike(String NameofVaahan, String NumberPlate, String Ventilation, int Count, int charges) {
+                Node_Vaahan newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
+                if (head_bike == null) {
+                    head_bike = newNode;
+                    return;
+                }
+                Node_Vaahan temp = head_bike;
+                while (temp.next != null) temp = temp.next;
+                temp.next = newNode;
+            }
+        
+            void createcarList() {
+                try (BufferedReader fin = new BufferedReader(new FileReader("cars.txt"))) {
+                    String line;
+                    while ((line = fin.readLine()) != null) {
+                        String NameofVaahan1 = line.trim();
+                        String NumberPlate1 = fin.readLine().trim();
+                        String Ventilation1 = fin.readLine().trim();
+                        int Count1 = Integer.parseInt(fin.readLine().trim());
+                        int charges1 = Integer.parseInt(fin.readLine().trim());
+                        insertNodecar(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        
+            void createbusList() {
+                try (BufferedReader fin = new BufferedReader(new FileReader("bus.txt"))) {
+                    String line;
+                    while ((line = fin.readLine()) != null) {
+                        String NameofVaahan1 = line.trim();
+                        String NumberPlate1 = fin.readLine().trim();
+                        String Ventilation1 = fin.readLine().trim();
+                        int Count1 = Integer.parseInt(fin.readLine().trim());
+                        int charges1 = Integer.parseInt(fin.readLine().trim());
+                        insertNodebus(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        
+            void createbikeList() {
+                try (BufferedReader fin = new BufferedReader(new FileReader("bikes.txt"))) {
+                    String line;
+                    while ((line = fin.readLine()) != null) {
+                        String NameofVaahan1 = line.trim();
+                        String NumberPlate1 = fin.readLine().trim();
+                        String Ventilation1 = fin.readLine().trim();
+                        int Count1 = Integer.parseInt(fin.readLine().trim());
+                        int charges1 = Integer.parseInt(fin.readLine().trim());
+                        insertNodebike(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            void insertNodecar(String NameofVaahan, String NumberPlate, String Ventilation, int Count, int charges) {
+                Node_Vaahan newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
+                if (head_car == null) {
+                    head_car = newNode;
+                    return;
+                }
+                Node_Vaahan temp = head_car;
+                while (temp.next != null) temp = temp.next;
+                temp.next = newNode;
+            }
+        
+            void insertNodebus(String NameofVaahan, String NumberPlate, String Ventilation, int Count, int charges) {
+                Node_Vaahan newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
+                if (head_bus == null) {
+                    head_bus = newNode;
+                    return;
+                }
+                Node_Vaahan temp = head_bus;
+                while (temp.next != null) temp = temp.next;
+                temp.next = newNode;
+            }
+        
+            void insertNodebike(String NameofVaahan, String NumberPlate, String Ventilation, int Count, int charges) {
+                Node_Vaahan newNode = new Node_Vaahan(NameofVaahan, NumberPlate, Ventilation, Count, charges);
+                if (head_bike == null) {
+                    head_bike = newNode;
+                    return;
+                }
+                Node_Vaahan temp = head_bike;
+                while (temp.next != null) temp = temp.next;
+                temp.next = newNode;
+            }
+        
+            void createcarList() {
+                try (BufferedReader fin = new BufferedReader(new FileReader("cars.txt"))) {
+                    String line;
+                    while ((line = fin.readLine()) != null) {
+                        String NameofVaahan1 = line.trim();
+                        String NumberPlate1 = fin.readLine().trim();
+                        String Ventilation1 = fin.readLine().trim();
+                        int Count1 = Integer.parseInt(fin.readLine().trim());
+                        int charges1 = Integer.parseInt(fin.readLine().trim());
+                        insertNodecar(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        
+            void createbusList() {
+                try (BufferedReader fin = new BufferedReader(new FileReader("bus.txt"))) {
+                    String line;
+                    while ((line = fin.readLine()) != null) {
+                        String NameofVaahan1 = line.trim();
+                        String NumberPlate1 = fin.readLine().trim();
+                        String Ventilation1 = fin.readLine().trim();
+                        int Count1 = Integer.parseInt(fin.readLine().trim());
+                        int charges1 = Integer.parseInt(fin.readLine().trim());
+                        insertNodebus(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        
+            void createbikeList() {
+                try (BufferedReader fin = new BufferedReader(new FileReader("bikes.txt"))) {
+                    String line;
+                    while ((line = fin.readLine()) != null) {
+                        String NameofVaahan1 = line.trim();
+                        String NumberPlate1 = fin.readLine().trim();
+                        String Ventilation1 = fin.readLine().trim();
+                        int Count1 = Integer.parseInt(fin.readLine().trim());
+                        int charges1 = Integer.parseInt(fin.readLine().trim());
+                        insertNodebike(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
+void display_all_Vaahan() {
+                System.out.println("\n\n\t\t\t\t\t\t\tALL VAAHAN LIST\n");
+                int choice;
+                do {
+                    System.out.println("\n\t\t\t\t\t\t\tChoose type of Vaahan");
+                    System.out.println("\t\t\t\t\t\t\t1.Car.");
+                    System.out.println("\t\t\t\t\t\t\t2.Bus.");
+                    System.out.println("\t\t\t\t\t\t\t3.Bike.");
+                    System.out.println("\t\t\t\t\t\t\t99.back.");
+                    System.out.print("\n\t\t\t\t\t\t\tYour choice: ");
+                    choice = Integer.parseInt(System.console().readLine());
+                    switch (choice) {
+                        case 1:
+                            display_all_cars();
+                            break;
+                        case 2:
+                            display_all_bus();
+                            break;
+                        case 3:
+                            display_all_bikes();
+                            break;
+                        case 99:
+                            break;
+                        default:
+                            System.out.println("\t\t\t\t\t\t\tPlease enter valid input !");
+                            break;
+                    }
+                } while (choice != 99);
+            }
+        
+            void display_all_cars() {
+                System.out.println("\n\n\t\t\t\t\t\t\tALL CARS\n");
+                Node_Vaahan temp = head_car;
+                if (head_car == null) {
+                    System.out.println("\n\t\t\t\t\t\t\tList empty");
+                    return;
+                }
+        
+                while (temp != null) {
+                    System.out.println("\n\t\t\t\t\t\t\tName - " + temp.NameofVaahan);
+                    System.out.println("\t\t\t\t\t\t\tNumber plate - " + temp.NumberPlate);
+                    System.out.println("\t\t\t\t\t\t\tventilation type - " + temp.Ventilation);
+                    System.out.println("\t\t\t\t\t\t\tCharges per hour - Rs." + temp.charges);
+                    temp = temp.next;
+                    System.out.println("\t\t\t\t\t\t\t*************************************");
+                }
+                System.out.println("\n");
+            }
 void Vaahan::display_all_bus()
 {
     system("cls");
