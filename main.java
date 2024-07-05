@@ -1009,70 +1009,7 @@ void display_all_Vaahan() {
                 }
                 System.out.println("\n");
             }
-void Vaahan::display_all_bus()
-{
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb ALL BUSES \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    Node_Vaahan *temp = head_bus;
 
-    if (head_bus == NULL)
-    {
-        cout << "\t\t\t\t\t\t\tList empty" << endl;
-        return;
-    }
-
-    while (temp != NULL)
-    {
-        cout << "\n\t\t\t\t\t\t\tName - " << temp->NameofVaahan << endl;
-        cout << "\t\t\t\t\t\t\tNumber plate - " << temp->NumberPlate << endl;
-        cout << "\t\t\t\t\t\t\tventilation type - " << temp->Ventilation << endl;
-        cout << "\t\t\t\t\t\t\tCharges per hour - Rs." << temp->charges << endl;
-        temp = temp->next;
-        cout << "\t\t\t\t\t\t\t*************" << endl;
-    }
-    cout << "\n";
-}
-
-void Vaahan::display_all_bikes()
-{
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb ALL BIKES \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    Node_Vaahan *temp = head_bike;
-
-    if (head_bike == NULL)
-    {
-        cout << "\t\t\t\t\t\t\tList empty" << endl;
-        return;
-    }
-
-    while (temp != NULL)
-    {
-        cout << "\n\t\t\t\t\t\t\tName - " << temp->NameofVaahan << endl;
-        cout << "\t\t\t\t\t\t\tNumber plate - " << temp->NumberPlate << endl;
-        cout << "\t\t\t\t\t\t\tCharges per hour - Rs." << temp->charges << endl;
-        temp = temp->next;
-        cout << "\t\t\t\t\t\t\t*************" << endl;
-    }
-    cout << "\n";
-}
 
 void Vaahan::display_all_available()
 {
@@ -1121,344 +1058,222 @@ void Vaahan::display_all_available()
 
 void Vaahan::display_available_cars()
 {
-    system("cls");
+    clearScreen();
+        printTitle("AVAILABLE CARS");
 
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb AVAILABLE CARS \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    Node_Vaahan *temp = head_car;
+        NodeVaahan temp = headCar;
 
-    if (head_car == NULL)
-    {
-        cout << "\n\t\t\t\t\t\t\tList empty" << endl;
-        return;
-    }
-
-    while (temp != NULL)
-    {
-        if (temp->Count > 0)
-        {
-            cout << "\n\t\t\t\t\t\t\tName - " << temp->NameofVaahan << endl;
-            cout << "\t\t\t\t\t\t\tNumber plate - " << temp->NumberPlate << endl;
-            cout << "\t\t\t\t\t\t\tventilation type - " << temp->Ventilation << endl;
-            cout << "\t\t\t\t\t\t\tCharges per hour - Rs." << temp->charges << endl;
-            cout << "\t\t\t\t\t\t\t*************************************" << endl;
+        if (headCar == null) {
+            System.out.println("\t\t\t\t\t\t\tList empty");
+            return;
         }
-        temp = temp->next;
-    }
-    cout << "\n";
+
+        while (temp != null) {
+            if (temp.count > 0) {
+                System.out.println("\n\t\t\t\t\t\t\tName - " + temp.nameOfVaahan);
+                System.out.println("\t\t\t\t\t\t\tNumber plate - " + temp.numberPlate);
+                System.out.println("\t\t\t\t\t\t\tVentilation type - " + temp.ventilation);
+                System.out.println("\t\t\t\t\t\t\tCharges per hour - Rs." + temp.charges);
+                System.out.println("\t\t\t\t\t\t\t*************************************");
+            }
+            temp = temp.next;
+        }
+        System.out.println();
 }
 
 void Vaahan::display_available_bus()
 {
-    Node_Vaahan *temp = head_bus;
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb AVAILABLE BUSES \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    if (head_bus == NULL)
-    {
-        cout << "\n\t\t\t\t\t\t\tList empty" << endl;
-        return;
-    }
+   clearScreen();
+        printTitle("AVAILABLE BUSES");
 
-    while (temp != NULL)
-    {
-        if (temp->Count > 0)
-        {
-            cout << "\n\t\t\t\t\t\t\tName - " << temp->NameofVaahan << endl;
-            cout << "\t\t\t\t\t\t\tNumber plate - " << temp->NumberPlate << endl;
-            cout << "\t\t\t\t\t\t\tventilation type - " << temp->Ventilation << endl;
-            cout << "\t\t\t\t\t\t\tCharges per hour - Rs." << temp->charges << endl;
-                        cout << "\t\t\t\t\t\t\t*****" << endl;
+        NodeVaahan temp = headBus;
+
+        if (headBus == null) {
+            System.out.println("\t\t\t\t\t\t\tList empty");
+            return;
         }
-        temp = temp->next;
-    }
-    cout << "\n";
+
+        while (temp != null) {
+            if (temp.count > 0) {
+                System.out.println("\n\t\t\t\t\t\t\tName - " + temp.nameOfVaahan);
+                System.out.println("\t\t\t\t\t\t\tNumber plate - " + temp.numberPlate);
+                System.out.println("\t\t\t\t\t\t\tVentilation type - " + temp.ventilation);
+                System.out.println("\t\t\t\t\t\t\tCharges per hour - Rs." + temp.charges);
+                System.out.println("\t\t\t\t\t\t\t*****");
+            }
+            temp = temp.next;
+        }
+        System.out.println();
 }
 
 void Vaahan::display_available_bikes()
 {
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb AVAILABLE BIKES \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    Node_Vaahan *temp = head_bike;
+    clearScreen();
+        printTitle("AVAILABLE BIKES");
 
-    if (head_bike == NULL)
-    {
-        cout << "\n\t\t\t\t\t\t\tList empty" << endl;
-        return;
-    }
+        NodeVaahan temp = headBike;
 
-    while (temp != NULL)
-    {
-        if (temp->Count > 0)
-        {
-            cout << "\n\t\t\t\t\t\t\tName - " << temp->NameofVaahan << endl;
-            cout << "\t\t\t\t\t\t\tNumber plate - " << temp->NumberPlate << endl;
-            cout << "\t\t\t\t\t\t\tCharges per hour - Rs." << temp->charges << endl;
-            cout << "\t\t\t\t\t\t\t*************" << endl;
+        if (headBike == null) {
+            System.out.println("\t\t\t\t\t\t\tList empty");
+            return;
         }
-        temp = temp->next;
-    }
-    cout << "\n";
+
+        while (temp != null) {
+            if (temp.count > 0) {
+                System.out.println("\n\t\t\t\t\t\t\tName - " + temp.nameOfVaahan);
+                System.out.println("\t\t\t\t\t\t\tNumber plate - " + temp.numberPlate);
+                System.out.println("\t\t\t\t\t\t\tCharges per hour - Rs." + temp.charges);
+                System.out.println("\t\t\t\t\t\t\t*************");
+            }
+            temp = temp.next;
+        }
+        System.out.println();
 }
 
 void Vaahan::addVaahan()
 {
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb ADD VAAHAN DETAILS \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    string NameofVaahan1;
-    string NumberPlate1;
-    string Ventilation1;
-    int Count1 = 1;
-    int charges1;
+     clearScreen();
+        printTitle("ADD VAAHAN DETAILS");
 
-    cout << "\n\t\t\t\t\t\t\tEnter the type of Vaahan you want to add ( car / bus / bike ): ";
-    string choice;
-    cin >> choice;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\t\t\t\t\t\t\tEnter the type of Vaahan you want to add (car / bus / bike): ");
+        String choice = scanner.nextLine();
+        
+        System.out.println("\t\t\t\t\t\t\tPlease enter the Name of Vaahan: ");
+        String nameOfVaahan = scanner.nextLine();
+        System.out.println("\t\t\t\t\t\t\tPlease enter the number plate: ");
+        String numberPlate = scanner.nextLine();
+        System.out.println("\t\t\t\t\t\t\tPlease enter the ventilation type: ");
+        String ventilation = scanner.nextLine();
+        System.out.println("\t\t\t\t\t\t\tPlease enter the charges (in Rs.) per day: ");
+        int charges = scanner.nextInt();
 
-    cout << "\n\t\t\t\t\t\t\tPlease enter the Name of Vaahan: ";
-    cin >> NameofVaahan1;
-    cout << "\t\t\t\t\t\t\tPlease enter the number plate: ";
-    cin >> NumberPlate1;
-    cout << "\t\t\t\t\t\t\tPlease enter the ventilation type : ";
-    cin >> Ventilation1;
-    cout << "\t\t\t\t\t\t\tPlease enter the charges (in Rs.) per day: ";
-    cin >> charges1;
-
-    if (choice == "car")
-    {
-        insertNodecar(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
-        cout << "\n\t\t\t\t\t\t\tCar added successfully to list." << endl;
-    }
-    else if (choice == "bus")
-    {
-        insertNodebus(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
-        cout << "\n\t\t\t\t\t\t\tBus added successfully to list." << endl;
-    }
-    else if (choice == "bike")
-    {
-        insertNodebike(NameofVaahan1, NumberPlate1, Ventilation1, Count1, charges1);
-        cout << "\n\t\t\t\t\t\t\tBike added successfully to list." << endl;
-    }
-    else
-        cout << "\n\t\t\t\t\t\t\tPlease enter valid argument and try again !" << endl;
-}
-
+        switch (choice.toLowerCase()) {
+            case "car":
+                insertNodeCar(nameOfVaahan, numberPlate, ventilation, 1, charges);
+                System.out.println("\n\t\t\t\t\t\t\tCar added successfully to list.");
+                break;
+            case "bus":
+                insertNodeBus(nameOfVaahan, numberPlate, ventilation, 1, charges);
+                System.out.println("\n\t\t\t\t\t\t\tBus added successfully to list.");
+                break;
+            case "bike":
+                insertNodeBike(nameOfVaahan, numberPlate, ventilation, 1, charges);
+                System.out.println("\n\t\t\t\t\t\t\tBike added successfully to list.");
+                break;
+            default:
+                System.out.println("\n\t\t\t\t\t\t\tPlease enter a valid argument and try again!");
+                break;
+        }
 void Vaahan::RepairVaahan()
-{
-    system("cls");
-    cout << endl
-         << endl;
-    char a[] = "\n\n\t\t\t\t\t\t\t\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb REPAIR VAAHAN \xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\xdb\n";
-    int size;
-    size = strlen(a);
-    for (int i = 0; i < size; i++)
-    {
-        Sleep(1);
-        cout << a[i];
-    }
-    string NameofVaahan1;
-    string NumberPlate1;
-    string choice1;
-    string rent_days;
+{clearScreen();
+        printTitle("REPAIR VAAHAN");
 
-    cout << "\n\t\t\t\t\t\t\tEnter the type of Vaahan you want to add ( car / bus / bike ): ";
-    cin >> choice1;
-    cout << "\n\t\t\t\t\t\t\tEnter the name of Vaahan you want to repair: ";
-    cin >> NameofVaahan1;
-    cout << "\n\t\t\t\t\t\t\tEnter the Number plate of Vaahan : ";
-    cin >> NumberPlate1;
-    if (choice1 == "car")
-    {
-        bool flag = 1;
-        Node_Vaahan *ptr = head_car;
-        while (ptr != NULL)
-        {
-            if (ptr->NameofVaahan == NameofVaahan1 && ptr->NumberPlate == NumberPlate1)
-            {
-                flag = 0;
-                if (ptr->Count > 0)
-                {
-                    flag = 0;
-                    cout << "\n\t\t\t\t\t\t\t" << ptr->NameofVaahan << "with number " << ptr->NumberPlate
-                         << " will be sent to garage for repair." << endl;
-                    cout << "\n\t\t\t\t\t\t\tPlease wait mechanic is checking the condition of car... \n\t\t\t\t\t\t\t";
-                    ShowPercentCompleteFast();
-                    cout << "\n\n\t\t\t\t\t\t\tCheck-up done ! ";
-                    // srand(time(0));
-                    // int temp = 1 + (rand() % 5);
-                    // cout << "Mechanic suggests to keep the car for " << temp << " day(s) in the garage." << endl;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\t\t\t\t\t\t\tEnter the type of Vaahan you want to repair (car / bus / bike): ");
+        String choice = scanner.nextLine();
+        System.out.println("\t\t\t\t\t\t\tEnter the name of Vaahan you want to repair: ");
+        String nameOfVaahan = scanner.nextLine();
+        System.out.println("\t\t\t\t\t\t\tEnter the Number plate of Vaahan: ");
+        String numberPlate = scanner.nextLine();
 
-                    cout << "\n\t\t\t\t\t\t\tYou need to wait for a while untill the car gets repaired. " << endl;
-                    cout << "\n\t\t\t\t\t\t\tYou still want to continue with repair process ( yes / no )?: ";
-                    cin >> rent_days;
-                    if (rent_days == "yes")
-                    {
-                        cout << "\n\t\t\t\t\t\t\tMechanic is repairing your car...";
-                        ShowPercentCompleteSlow();
-                        cout << "\n\t\t\t\t\t\t\tCar repair success !" << endl;
-                    }
-                    else if (rent_days == "no")
-                    {
-                        cout << "\n\t\t\t\t\t\t\tOk ! Car not sent for repair." << endl;
-                        break; // so that 'while loop' does not keep on iterating unnecessarily --> to save a bit of time
-                    }
-                    else
-                    {
-                        cout << "\n\t\t\t\t\t\t\tEnter valid input and try again !" << endl;
-                        break; // so that 'while loop' does not keep on iterating unnecessarily --> to save a bit of time
-                    }
-                }
-                else
-                    cout << "\n\t\t\t\t\t\t\tDear admin " << NameofVaahan1 << " is " << underline_on << "not" << reset
-                         << " available with you currently.\n \n\t\t\t\t\t\t\tCheck whether it is given for rent or already sent to mechanic." << endl;
-            }
-            ptr = ptr->next;
+        switch (choice.toLowerCase()) {
+            case "car":
+                repairVaahanHelper(headCar, nameOfVaahan, numberPlate);
+                break;
+            case "bus":
+                repairVaahanHelper(headBus, nameOfVaahan, numberPlate);
+                break;
+            case "bike":
+                repairVaahanHelper(headBike, nameOfVaahan, numberPlate);
+                break;
+            default:
+                System.out.println("\n\t\t\t\t\t\t\tInvalid input, please try again.");
+                break;
         }
-        if (flag)
-            cout << "\n\t\t\t\t\t\t\tCar not found with name " << NameofVaahan1 << " and "
-                 << "number " << NumberPlate1 << ", try again later." << endl;
     }
-    else if (choice1 == "bus")
-    {
-        bool flag = 1;
-        Node_Vaahan *ptr = head_bus;
-        while (ptr != NULL)
-        {
-            if (ptr->NameofVaahan == NameofVaahan1 && ptr->NumberPlate == NumberPlate1)
-            {
-                flag = 0;
-                if (ptr->Count > 0)
-                {
-                    flag = 0;
-                    cout << "\n\t\t\t\t\t\t\t" << ptr->NameofVaahan << "with number " << ptr->NumberPlate
-                         << " will be sent to garage for repair." << endl;
-                    cout << "\n\t\t\t\t\t\t\tPlease wait mechanic is checking the condition of bus... " << endl;
-                    ShowPercentCompleteFast();
-                    cout << "\n\n\t\t\t\t\t\t\tCheck-up done ! ";
-                    // srand(time(0));
-                    // int temp = 1 + (rand() % 5);
-                    // cout << "Mechanic suggests to keep the car for " << temp << " day(s) in the garage." << endl;
 
-                    cout << "\n\t\t\t\t\t\t\tYou need to wait for a while untill the bus gets repaired. " << endl;
-                    cout << "\n\t\t\t\t\t\t\tYou still want to continue with repair process ( yes / no )?: ";
-                    cin >> rent_days;
-                    if (rent_days == "yes")
-                    {
-                        cout << "\n\t\t\t\t\t\t\tMechanic is repairing your bus..." << endl;
-                        ShowPercentCompleteSlow();
-                        cout << "\n\t\t\t\t\t\t\tBus repair success !" << endl;
+    private void repairVaahanHelper(NodeVaahan head, String nameOfVaahan, String numberPlate) {
+        boolean found = false;
+        NodeVaahan ptr = head;
+        Scanner scanner = new Scanner(System.in);
+
+        while (ptr != null) {
+            if (ptr.nameOfVaahan.equals(nameOfVaahan) && ptr.numberPlate.equals(numberPlate)) {
+                found = true;
+                if (ptr.count > 0) {
+                    System.out.println("\n\t\t\t\t\t\t\t" + ptr.nameOfVaahan + " with number " + ptr.numberPlate
+                            + " will be sent to the garage for repair.");
+                    System.out.println("\n\t\t\t\t\t\t\tPlease wait, mechanic is checking the condition of the vaahan...");
+                    showPercentCompleteFast();
+                    System.out.println("\n\n\t\t\t\t\t\t\tCheck-up done!");
+                    System.out.println("\n\t\t\t\t\t\t\tYou need to wait for a while until the vaahan gets repaired.");
+                    System.out.println("\n\t\t\t\t\t\t\tDo you want to continue with the repair process (yes / no)?: ");
+                    String rentDays = scanner.nextLine();
+                    if (rentDays.equalsIgnoreCase("yes")) {
+                        System.out.println("\n\t\t\t\t\t\t\tMechanic is repairing your vaahan...");
+                        showPercentCompleteSlow();
+                        System.out.println("\n\t\t\t\t\t\t\tVaahan repair success!");
+                    } else if (rentDays.equalsIgnoreCase("no")) {
+                        System.out.println("\n\t\t\t\t\t\t\tOk! Vaahan not sent for repair.");
+                    } else {
+                        System.out.println("\n\t\t\t\t\t\t\tEnter valid input and try again!");
                     }
-                    else if (rent_days == "no")
-                    {
-                        cout << "\n\t\t\t\t\t\t\tOk ! Bus not sent for repair." << endl;
-                        break; // so that 'while loop' does not keep on iterating unnecessarily --> to save a bit of time
-                    }
-                    else
-                    {
-                        cout << "\n\t\t\t\t\t\t\tEnter valid input and try again !" << endl;
-                        break; // so that 'while loop' does not keep on iterating unnecessarily --> to save a bit of time
-                    }
+                } else {
+                    System.out.println("\n\t\t\t\t\t\t\tDear admin, " + nameOfVaahan + " is not available with you currently.\n"
+                            + "\t\t\t\t\t\t\tCheck whether it is given for rent or already sent to mechanic.");
                 }
-                else
-                    cout << "\n\t\t\t\t\t\t\tDear admin " << NameofVaahan1 << " is " << underline_on << "not" << reset
-                         << " available with you currently.\n\n\t\t\t\t\t\t\t Check whether it is given for rent or already sent to mechanic." << endl;
             }
-            ptr = ptr->next;
+            ptr = ptr.next;
         }
-        if (flag)
-            cout << "\n\t\t\t\t\t\t\tBus not found with name " << NameofVaahan1 << " and "
-                 << "number " << NumberPlate1 << ", try again later." << endl;
-    }
-    else if (choice1 == "bike")
-    {
-        bool flag = 1;
-        Node_Vaahan *ptr = head_bike;
-        while (ptr != NULL)
-        {
-            if (ptr->NameofVaahan == NameofVaahan1 && ptr->NumberPlate == NumberPlate1)
-            {
-                flag = 0;
-                if (ptr->Count > 0)
-                {
-                    flag = 0;
-                    cout << "\n\t\t\t\t\t\t\t" << ptr->NameofVaahan << "with number " << ptr->NumberPlate
-                         << " will be sent to garage for repair." << endl;
-                    cout << "\n\t\t\t\t\t\t\tPlease wait mechanic is checking the condition of bike... " << endl;
-                    ShowPercentCompleteFast();
-                    cout << "\n\n\t\t\t\t\t\t\tCheck-up done ! ";
-                    // srand(time(0));
-                    // int temp = 1 + (rand() % 5);
-                    // cout << "Mechanic suggests to keep the car for " << temp << " day(s) in the garage." << endl;
-
-                    cout << "\n\t\t\t\t\t\t\tYou need to wait for a while untill the bike gets repaired. " << endl;
-                    cout << "\n\t\t\t\t\t\t\tYou still want to continue with repair process ( yes / no )?: ";
-                    cin >> rent_days;
-                    if (rent_days == "yes")
-                    {
-                        cout << "\n\t\t\t\t\t\t\tMechanic is repairing your bike..." << endl;
-                        ShowPercentCompleteSlow();
-                        cout << "\n\t\t\t\t\t\t\tbike repair success !" << endl;
-                    }
-                    else if (rent_days == "no")
-                    {
-                        cout << "\n\t\t\t\t\t\t\tOk ! Bike not sent for repair." << endl;
-                        break; // so that 'while loop' does not keep on iterating unnecessarily --> to save a bit of time
-                    }
-                    else
-                    {
-                        cout << "\n\t\t\t\t\t\t\tEnter valid input and try again !" << endl;
-                        break; // so that 'while loop' does not keep on iterating unnecessarily --> to save a bit of time
-                    }
-                }
-                else
-                    cout << "\n\t\t\t\t\t\t\tDear admin " << NameofVaahan1 << " is " << underline_on << "not" << reset
-                         << " available with you currently.\n\n\t\t\t\t\t\t\t Check whether it is given for rent or already sent to mechanic." << endl;
-            }
-            ptr = ptr->next;
+        if (!found) {
+            System.out.println("\n\t\t\t\t\t\t\tVaahan not found with name " + nameOfVaahan + " and number " + numberPlate + ", try again later.");
         }
-        if (flag)
-            cout << "\n\t\t\t\t\t\t\tBike not found with name " << NameofVaahan1 << " and "
-                 << "number " << NumberPlate1 << ", try again later." << endl;
     }
 
-    else
-        cout << "\n\t\t\t\t\t\t\tInvalid input ,please try again." << endl;
+    private void clearScreen() {
+        // This method simulates clearing the screen, as Java does not have a direct equivalent of system("cls").
+        for (int i = 0; i < 50; ++i) System.out.println();
+    }
+
+    private void printTitle(String title) {
+        String decoration = "\n\n\t\t\t\t\t\t\t==================== " + title + " ====================\n";
+        for (char c : decoration.toCharArray()) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.print(c);
+        }
+    }
+
+    private void showPercentCompleteFast() {
+        // Simulate progress indicator
+        for (int i = 0; i <= 100; i += 20) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.print(i + "% ");
+        }
+        System.out.println();
+    }
+
+    private void showPercentCompleteSlow() {
+        // Simulate progress indicator
+        for (int i = 0; i <= 100; i += 10) {
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.print(i + "% ");
+        }
+        System.out.println();
+    }
 }
-
 //===================Login / sign-up==========================//
 
 void User::PreLogin_Customer()
